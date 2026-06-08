@@ -329,9 +329,9 @@ export default function ContactPage() {
                     Headquarters
                   </h3>
                   <p className="text-brand-dark font-medium text-base md:text-lg leading-snug">
-                    [Your Street Address Placeholder] <br />
+                    Koregaon Bhima<br />
                     Pune, Maharashtra, India <br />
-                    [Your Pincode Placeholder]
+                    
                   </p>
                 </div>
               </div>
@@ -346,7 +346,7 @@ export default function ContactPage() {
                     Sales & Support
                   </h3>
                   <p className="text-brand-dark font-medium text-base md:text-lg leading-snug">
-                    [Your Phone Number Placeholder]
+                    +91 9422308363
                   </p>
                 </div>
               </div>
@@ -361,7 +361,7 @@ export default function ContactPage() {
                     Email Us
                   </h3>
                   <p className="text-brand-dark font-medium text-base md:text-lg leading-snug">
-                    [Your Email Address Placeholder]
+                    sales@acs.co.in
                   </p>
                 </div>
               </div>

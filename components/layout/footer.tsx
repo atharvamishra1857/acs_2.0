@@ -82,18 +82,18 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <span className="font-bold text-brand-orange">📍</span>
                 <span>
-                  Industrial Estate
+                  Koregaon Bhima
                   <br />
                   Pune, Maharashtra, India
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <span className="font-bold text-brand-orange">📞</span>
-                <span>+91 XXXXX XXXXX</span>
+                <span>+91 9422308363</span>
               </li>
               <li className="flex items-center gap-3">
                 <span className="font-bold text-brand-orange">✉️</span>
-                <span>sales@acsmachines.com</span>
+                <span>sales@acs.co.in</span>
               </li>
             </ul>
           </div>

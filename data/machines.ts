@@ -27,7 +27,7 @@ export const machinesDB = {
         id: "dc-semi",
         name: "Semi Automatic Double Column Bandsaw",
         type: "Semi-Automatic",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/double_column_miter.png",
         features: [
           "LMG Guided Double Column Construction.",
           "High Efficiency Power Transmission through HELICAL GEARED MOTOR.",
@@ -45,7 +45,7 @@ export const machinesDB = {
         id: "dc-manual",
         name: "Manual Double Column Bandsaw",
         type: "Manual",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/double_column_miter.png",
         features: [
           "LMG Guided Double Column Construction.",
           "Manual Arrangement for clamping Main Vice.",
@@ -61,7 +61,7 @@ export const machinesDB = {
         id: "dc-mitre",
         name: "Double Column Mitre Bandsaw",
         type: "Specialized",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/double_column_miter.png",
         features: [
           "Specially Designed for MITRE (Degree Cutting): +45° to -60° positioning.",
           "LMG Guided Double Column Construction guaranteeing vibration free operation.",
@@ -84,7 +84,7 @@ export const machinesDB = {
         id: "vc-auto",
         name: "Fully Automatic Vertical Bandsaw",
         type: "Automatic",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/vertical_bandsaw.png",
         features: [
           "Heavy duty plate welded structural frame minimizing deflection under load.",
           "Automatic hydraulic table feed synchronized with material indexing systems.",
@@ -101,7 +101,7 @@ export const machinesDB = {
         id: "vc-semi",
         name: "Semi Automatic Vertical Bandsaw",
         type: "Semi-Automatic",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/vertical_bandsaw.png",
         features: [
           "Rigid upright column construction ensuring perfect structural alignment.",
           "Hydraulically operated stroke feed table with precision flow control valve adjustment.",
@@ -117,7 +117,7 @@ export const machinesDB = {
         id: "vc-manual",
         name: "Manual Toolroom Vertical Bandsaw",
         type: "Manual",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/vertical_bandsaw.png",
         features: [
           "Compact industrial footprint optimized for die-shop and toolroom requirements.",
           "Manual hand-feed workspace with balanced, smooth-glide material pushing attachments.",

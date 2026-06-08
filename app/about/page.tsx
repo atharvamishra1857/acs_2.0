@@ -640,11 +640,10 @@ export default function AboutPage() {
             <div className="flex flex-col items-center text-center pt-10 md:pt-0">
               <span className="text-4xl block mb-5">📍</span>
               <h4 className="font-bold uppercase tracking-widest text-sm text-brand-orange mb-3">
-                India Works
+                Workshop
               </h4>
               <p className="text-base font-medium text-gray-300 max-w-[280px] leading-relaxed">
-                Survey No. 52/3, Lane No. 4, Maruti Nagar, Vadgaon Sheri, Pune
-                411014.
+                Koregoan Bhima, Pune, Maharashtra
               </p>
             </div>
           </div>
