@@ -207,7 +207,7 @@ export default function HeroSection() {
 
           <div className="hero-fade-up mt-10 flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
             <MagneticButton
-              href="#machines"
+              href="/machines/double-column"
               className="inline-flex justify-center rounded-md border border-brand-gray bg-transparent px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition-colors duration-500 hover:border-brand-orange hover:bg-brand-orange/5"
             >
               Explore Our Machines
