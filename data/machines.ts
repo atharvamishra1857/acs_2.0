@@ -27,7 +27,7 @@ export const machinesDB = {
         id: "dc-semi",
         name: "Semi Automatic Double Column Bandsaw",
         type: "Semi-Automatic",
-        image: "/images/products/double_column_miter.png",
+        image: "/images/products/ACS machine.jpeg",
         features: [
           "LMG Guided Double Column Construction.",
           "High Efficiency Power Transmission through HELICAL GEARED MOTOR.",
@@ -45,7 +45,7 @@ export const machinesDB = {
         id: "dc-manual",
         name: "Manual Double Column Bandsaw",
         type: "Manual",
-        image: "/images/products/double_column_miter.png",
+        image: "/images/products/ACS machine.jpeg",
         features: [
           "LMG Guided Double Column Construction.",
           "Manual Arrangement for clamping Main Vice.",
