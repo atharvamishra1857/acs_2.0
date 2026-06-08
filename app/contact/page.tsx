@@ -15,14 +15,26 @@ export default function ContactPage() {
     const ctx = gsap.context(() => {
       // Hero Entrance
       const tl = gsap.timeline({ delay: 0.1 });
-      tl.from(".hero-eyebrow", { opacity: 0, duration: 0.7, ease: "power2.out" });
-      tl.from(".hero-line", {
-        y: 60,
-        clipPath: "inset(100% 0% 0% 0%)",
-        duration: 0.9,
-        ease: "power4.out"
-      }, "-=0.4");
-      tl.from(".hero-sub", { y: 20, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5");
+      tl.from(".hero-eyebrow", {
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.out",
+      });
+      tl.from(
+        ".hero-line",
+        {
+          y: 60,
+          clipPath: "inset(100% 0% 0% 0%)",
+          duration: 0.9,
+          ease: "power4.out",
+        },
+        "-=0.4",
+      );
+      tl.from(
+        ".hero-sub",
+        { y: 20, opacity: 0, duration: 0.8, ease: "power4.out" },
+        "-=0.5",
+      );
 
       // Contact Info Items
       gsap.from(".contact-item-anim", {
@@ -34,7 +46,7 @@ export default function ContactPage() {
         opacity: 0,
         duration: 0.8,
         stagger: 0.15,
-        ease: "power4.out"
+        ease: "power4.out",
       });
 
       // Fieldset sections
@@ -47,17 +59,20 @@ export default function ContactPage() {
         opacity: 0,
         duration: 0.8,
         stagger: 0.15,
-        ease: "power4.out"
+        ease: "power4.out",
       });
-
     }, containerRef);
 
     return () => ctx.revert();
   }, [reducedMotion]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const materialTypeChecked = document.querySelectorAll('input[name="materialType"]:checked').length > 0;
-    const materialSizeChecked = document.querySelectorAll('input[name="materialSize"]:checked').length > 0;
+    const materialTypeChecked =
+      document.querySelectorAll('input[name="materialType"]:checked').length >
+      0;
+    const materialSizeChecked =
+      document.querySelectorAll('input[name="materialSize"]:checked').length >
+      0;
 
     if (!materialTypeChecked || !materialSizeChecked) {
       e.preventDefault();
@@ -66,7 +81,10 @@ export default function ContactPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-brand-light flex flex-col">
+    <div
+      ref={containerRef}
+      className="min-h-screen bg-brand-light flex flex-col"
+    >
       <style>{`
         /* ── Field Focus ── */
         .fi {
@@ -232,7 +250,15 @@ export default function ContactPage() {
         <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand-orange/30 to-transparent" />
         <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand-orange/30 to-transparent" />
 
-        <div className="absolute hidden lg:flex items-center gap-2 top-6 right-8" style={{ background: "rgba(255,90,0,0.08)", border: "1px solid rgba(255,90,0,0.25)", borderRadius: "2px", padding: "5px 12px" }}>
+        <div
+          className="absolute hidden lg:flex items-center gap-2 top-6 right-8"
+          style={{
+            background: "rgba(255,90,0,0.08)",
+            border: "1px solid rgba(255,90,0,0.25)",
+            borderRadius: "2px",
+            padding: "5px 12px",
+          }}
+        >
           <span className="text-brand-orange text-xs font-bold tracking-widest uppercase opacity-80">
             Engineering Enquiries
           </span>
@@ -243,14 +269,30 @@ export default function ContactPage() {
             Bandsaw Solutions · Pune, India
           </p>
           <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight uppercase overflow-hidden pb-2">
-            <span className="hero-line inline-block" style={{ clipPath: "inset(100% 0% 0% 0%)" }}>Request a Quote</span>
+            <span
+              className="hero-line inline-block"
+              style={{ clipPath: "inset(100% 0% 0% 0%)" }}
+            >
+              Request a Quote
+            </span>
           </h1>
           <p className="hero-sub text-2xl font-light text-brand-orange/80 mt-4 italic">
             Let's build the perfect machine for your floor...
           </p>
           <div className="mt-10 flex justify-center">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,90,0,0.5)" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0l-5-5m5 5l5-5" />
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="rgba(255,90,0,0.5)"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 5v14m0 0l-5-5m5 5l5-5"
+              />
             </svg>
           </div>
         </div>
@@ -259,47 +301,93 @@ export default function ContactPage() {
       {/* ══════════════ BODY ══════════════ */}
       <section className="flex-grow max-w-7xl mx-auto px-6 lg:px-8 py-20 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          
           {/* ── LEFT: Contact Info ── */}
-          <div className="contact-info-section lg:col-span-5 flex flex-col justify-start">
-            <h2 className="text-3xl font-black text-brand-dark uppercase tracking-tight mb-3">
-              Direct Contact
-            </h2>
-            <div className="h-1 w-16 bg-brand-orange rounded mb-8" />
-            <p className="text-brand-gray mb-10 leading-relaxed text-base">
-              Whether you need a custom automated bandsaw configuration, bulk ordering details, or technical specifications — our engineering team is ready to assist.
-            </p>
+          {/* Left Column: Contact Information */}
+          <div className="lg:col-span-5 flex flex-col justify-start">
+            {/* Header & Intro */}
+            <div className="mb-12">
+              <h2 className="text-3xl md:text-4xl font-black text-brand-dark uppercase tracking-tight mb-4">
+                Direct Contact
+              </h2>
+              <div className="w-16 h-1 bg-brand-orange mb-6"></div>
+              <p className="text-gray-600 leading-relaxed text-lg">
+                Whether you need a custom automated bandsaw configuration, bulk
+                ordering details, or technical specifications — our engineering
+                team is ready to assist.
+              </p>
+            </div>
 
-            <div className="space-y-3">
-              <div className="contact-item-anim">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-1">Headquarters</h3>
-                <p className="text-brand-dark font-medium text-base leading-relaxed">
-                  [Your Street Address Placeholder]<br />
-                  Pune, Maharashtra, India<br />
-                  [Your Pincode Placeholder]
-                </p>
+            {/* Contact Details Grid (Forces alignment between Icon and Text) */}
+            <div className="space-y-10">
+              {/* Address */}
+              <div className="flex flex-row items-start gap-5 group">
+                <div className="w-14 h-14 bg-white border-2 border-gray-100 rounded-sm flex items-center justify-center shrink-0 group-hover:border-brand-orange transition-colors shadow-sm">
+                  <span className="text-2xl">📍</span>
+                </div>
+                <div className="flex flex-col pt-1">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">
+                    Headquarters
+                  </h3>
+                  <p className="text-brand-dark font-medium text-base md:text-lg leading-snug">
+                    [Your Street Address Placeholder] <br />
+                    Pune, Maharashtra, India <br />
+                    [Your Pincode Placeholder]
+                  </p>
+                </div>
               </div>
-              <div className="contact-item-anim">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-1">Sales & Support</h3>
-                <p className="text-brand-dark font-medium text-base">[Your Phone Number Placeholder]</p>
+
+              {/* Phone */}
+              <div className="flex flex-row items-start gap-5 group">
+                <div className="w-14 h-14 bg-white border-2 border-gray-100 rounded-sm flex items-center justify-center shrink-0 group-hover:border-brand-orange transition-colors shadow-sm">
+                  <span className="text-2xl">📞</span>
+                </div>
+                <div className="flex flex-col pt-1">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">
+                    Sales & Support
+                  </h3>
+                  <p className="text-brand-dark font-medium text-base md:text-lg leading-snug">
+                    [Your Phone Number Placeholder]
+                  </p>
+                </div>
               </div>
-              <div className="contact-item-anim">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-1">Email Us</h3>
-                <p className="text-brand-dark font-medium text-base">[Your Email Address Placeholder]</p>
+
+              {/* Email */}
+              <div className="flex flex-row items-start gap-5 group">
+                <div className="w-14 h-14 bg-white border-2 border-gray-100 rounded-sm flex items-center justify-center shrink-0 group-hover:border-brand-orange transition-colors shadow-sm">
+                  <span className="text-2xl">✉️</span>
+                </div>
+                <div className="flex flex-col pt-1">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">
+                    Email Us
+                  </h3>
+                  <p className="text-brand-dark font-medium text-base md:text-lg leading-snug">
+                    [Your Email Address Placeholder]
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="contact-item-anim mt-10 bg-brand-dark rounded-sm p-5 border-none before:hidden">
-              <p className="text-xs font-mono text-white/60 leading-7 tracking-wide">
-                <span className="text-brand-orange">// </span>Response time: &lt; 24 hours<br />
-                <span className="text-brand-orange">// </span>All quotes are custom-engineered<br />
-                <span className="text-brand-orange">// </span>Pan-India delivery available
-              </p>
+            {/* The AI's Terminal Box (Fixed Padding and Margins) */}
+            <div className="mt-14 bg-brand-dark p-6 md:p-8 rounded-sm border-l-4 border-brand-orange shadow-lg w-full">
+              <ul className="space-y-4 text-sm font-mono text-gray-300">
+                <li className="flex items-center">
+                  <span className="text-brand-orange mr-3 text-lg">//</span>{" "}
+                  Response time: &lt; 24 hours
+                </li>
+                <li className="flex items-center">
+                  <span className="text-brand-orange mr-3 text-lg">//</span> All
+                  quotes are custom-engineered
+                </li>
+                <li className="flex items-center">
+                  <span className="text-brand-orange mr-3 text-lg">//</span>{" "}
+                  Pan-India delivery available
+                </li>
+              </ul>
             </div>
           </div>
 
           {/* ── RIGHT: Form ── */}
-          <motion.div 
+          <motion.div
             className="form-section lg:col-span-7"
             initial={reducedMotion ? false : { opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -307,14 +395,29 @@ export default function ContactPage() {
           >
             <div className="form-card bg-white rounded-sm shadow-xl border border-gray-100 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
               <div className="form-top-bar" />
-              
+
               <div className="bg-brand-dark px-8 py-6 flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-extrabold text-white uppercase tracking-tight">Machine Configuration</h2>
-                  <p className="text-brand-orange text-xs font-mono tracking-widest mt-1 opacity-70">FILL ALL REQUIRED FIELDS</p>
+                  <h2 className="text-xl font-extrabold text-white uppercase tracking-tight">
+                    Machine Configuration
+                  </h2>
+                  <p className="text-brand-orange text-xs font-mono tracking-widest mt-1 opacity-70">
+                    FILL ALL REQUIRED FIELDS
+                  </p>
                 </div>
                 <div className="flex gap-2">
-                  {["#ff5f57", "#febc2e", "#28c840"].map((c, i) => <div key={i} style={{ width: 11, height: 11, borderRadius: "50%", background: c, opacity: 0.55 }} />)}
+                  {["#ff5f57", "#febc2e", "#28c840"].map((c, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        width: 11,
+                        height: 11,
+                        borderRadius: "50%",
+                        background: c,
+                        opacity: 0.55,
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
 
@@ -323,26 +426,80 @@ export default function ContactPage() {
                   {/* ─ 01 Contact Details ─ */}
                   <fieldset className="space-y-5 border-0 p-0 m-0">
                     <legend className="flex items-center gap-3 w-full mb-5">
-                      <span className="w-[22px] h-[22px] rounded-full bg-brand-orange text-white flex items-center justify-center text-[10px] font-bold">1</span>
-                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">Contact Details</span>
+                      <span className="w-[22px] h-[22px] rounded-full bg-brand-orange text-white flex items-center justify-center text-[10px] font-bold">
+                        1
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">
+                        Contact Details
+                      </span>
                       <span className="legend-line" />
                     </legend>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="name" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Full Name <span className="text-brand-orange">*</span></label>
-                        <input type="text" id="name" name="name" required placeholder="e.g. Rajan Mehta" className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium" />
+                        <label
+                          htmlFor="name"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Full Name <span className="text-brand-orange">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          required
+                          placeholder="e.g. Rajan Mehta"
+                          className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium"
+                        />
                       </div>
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="phone" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Phone <span className="text-brand-orange">*</span></label>
-                        <input type="tel" id="phone" name="phone" required placeholder="+91 XXXXX XXXXX" className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium" />
+                        <label
+                          htmlFor="phone"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Phone <span className="text-brand-orange">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          required
+                          placeholder="+91 XXXXX XXXXX"
+                          className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium"
+                        />
                       </div>
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="email" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Business Email <span className="text-brand-orange">*</span></label>
-                        <input type="email" id="email" name="email" required placeholder="you@company.com" className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium" />
+                        <label
+                          htmlFor="email"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Business Email{" "}
+                          <span className="text-brand-orange">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
+                          placeholder="you@company.com"
+                          className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium"
+                        />
                       </div>
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="company" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Company Name <span className="text-brand-orange">*</span></label>
-                        <input type="text" id="company" name="company" required placeholder="Your Company Ltd." className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium" />
+                        <label
+                          htmlFor="company"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Company Name{" "}
+                          <span className="text-brand-orange">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="company"
+                          name="company"
+                          required
+                          placeholder="Your Company Ltd."
+                          className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium"
+                        />
                       </div>
                     </div>
                   </fieldset>
@@ -350,14 +507,29 @@ export default function ContactPage() {
                   {/* ─ 02 Machine Details ─ */}
                   <fieldset className="space-y-5 border-0 p-0 m-0">
                     <legend className="flex items-center gap-3 w-full mb-5">
-                      <span className="w-[22px] h-[22px] rounded-full bg-brand-orange text-white flex items-center justify-center text-[10px] font-bold">2</span>
-                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">Machine Details</span>
+                      <span className="w-[22px] h-[22px] rounded-full bg-brand-orange text-white flex items-center justify-center text-[10px] font-bold">
+                        2
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">
+                        Machine Details
+                      </span>
                       <span className="legend-line" />
                     </legend>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="bandsawType" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Type of Bandsaw <span className="text-brand-orange">*</span></label>
-                        <select id="bandsawType" name="bandsawType" required className="fi custom-select w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium cursor-pointer">
+                        <label
+                          htmlFor="bandsawType"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Type of Bandsaw{" "}
+                          <span className="text-brand-orange">*</span>
+                        </label>
+                        <select
+                          id="bandsawType"
+                          name="bandsawType"
+                          required
+                          className="fi custom-select w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium cursor-pointer"
+                        >
                           <option value="">— Please choose —</option>
                           <option value="horizontal">Horizontal Bandsaw</option>
                           <option value="vertical">Vertical Bandsaw</option>
@@ -366,17 +538,43 @@ export default function ContactPage() {
                         </select>
                       </div>
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="quantity" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Quantity Required <span className="text-brand-orange">*</span></label>
-                        <input type="number" id="quantity" name="quantity" required min={1} placeholder="e.g. 2" className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium" />
+                        <label
+                          htmlFor="quantity"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Quantity Required{" "}
+                          <span className="text-brand-orange">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          id="quantity"
+                          name="quantity"
+                          required
+                          min={1}
+                          placeholder="e.g. 2"
+                          className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium"
+                        />
                       </div>
                     </div>
                     <div className="field-wrap space-y-3">
-                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Machine Type <span className="text-brand-orange">*</span></label>
+                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">
+                        Machine Type{" "}
+                        <span className="text-brand-orange">*</span>
+                      </label>
                       <div className="flex flex-wrap gap-3">
                         {["Automatic", "Semi Automatic", "Manual"].map((mt) => (
                           <label key={mt}>
-                            <input type="radio" name="machineType" value={mt.toLowerCase().replace(" ", "_")} required className="radio-input" />
-                            <span className="radio-label"><span className="radio-dot" />{mt}</span>
+                            <input
+                              type="radio"
+                              name="machineType"
+                              value={mt.toLowerCase().replace(" ", "_")}
+                              required
+                              className="radio-input"
+                            />
+                            <span className="radio-label">
+                              <span className="radio-dot" />
+                              {mt}
+                            </span>
                           </label>
                         ))}
                       </div>
@@ -386,16 +584,34 @@ export default function ContactPage() {
                   {/* ─ 03 Material Information ─ */}
                   <fieldset className="space-y-5 border-0 p-0 m-0">
                     <legend className="flex items-center gap-3 w-full mb-5">
-                      <span className="w-[22px] h-[22px] rounded-full bg-brand-orange text-white flex items-center justify-center text-[10px] font-bold">3</span>
-                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">Material Information</span>
+                      <span className="w-[22px] h-[22px] rounded-full bg-brand-orange text-white flex items-center justify-center text-[10px] font-bold">
+                        3
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">
+                        Material Information
+                      </span>
                       <span className="legend-line" />
                     </legend>
                     <div className="field-wrap space-y-3">
-                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Size / Shape of Material to Cut</label>
+                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">
+                        Size / Shape of Material to Cut
+                      </label>
                       <div className="flex flex-wrap gap-2">
-                        {["Round Bar / Pipe", "Square Bar / Pipe", "Casting", "Runner", "Riser"].map((s) => (
+                        {[
+                          "Round Bar / Pipe",
+                          "Square Bar / Pipe",
+                          "Casting",
+                          "Runner",
+                          "Riser",
+                        ].map((s) => (
                           <label key={s}>
-                            <input type="checkbox" name="materialSize" required value={s} className="tile-input" />
+                            <input
+                              type="checkbox"
+                              name="materialSize"
+                              required
+                              value={s}
+                              className="tile-input"
+                            />
                             <span className="tile-label">{s}</span>
                           </label>
                         ))}
@@ -403,28 +619,98 @@ export default function ContactPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="materialWidth" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Width (mm)</label>
-                        <input type="number" id="materialWidth" name="materialWidth" required min="0" placeholder="e.g. 250" className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium" />
+                        <label
+                          htmlFor="materialWidth"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Width (mm)
+                        </label>
+                        <input
+                          type="number"
+                          id="materialWidth"
+                          name="materialWidth"
+                          required
+                          min="0"
+                          placeholder="e.g. 250"
+                          className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium"
+                        />
                       </div>
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="materialHeight" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Height (mm)</label>
-                        <input type="number" id="materialHeight" name="materialHeight" min="0" required placeholder="e.g. 150" className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium" />
+                        <label
+                          htmlFor="materialHeight"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Height (mm)
+                        </label>
+                        <input
+                          type="number"
+                          id="materialHeight"
+                          name="materialHeight"
+                          min="0"
+                          required
+                          placeholder="e.g. 150"
+                          className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium"
+                        />
                       </div>
                       <div className="field-wrap space-y-2">
-                        <label htmlFor="materialLength" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Length (mm)</label>
-                        <input type="number" id="materialLength" name="materialLength" min="0" required placeholder="e.g. 6000" className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium" />
+                        <label
+                          htmlFor="materialLength"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                        >
+                          Length (mm)
+                        </label>
+                        <input
+                          type="number"
+                          id="materialLength"
+                          name="materialLength"
+                          min="0"
+                          required
+                          placeholder="e.g. 6000"
+                          className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium"
+                        />
                       </div>
                     </div>
                     <div className="field-wrap space-y-2">
-                      <label htmlFor="additionalDimensions" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Additional Size Information</label>
-                      <textarea id="additionalDimensions" name="additionalDimensions" rows={3} placeholder="Example: Ø250 mm round bar, 6 meter length, bundle cutting required." className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium resize-none" />
+                      <label
+                        htmlFor="additionalDimensions"
+                        className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                      >
+                        Additional Size Information
+                      </label>
+                      <textarea
+                        id="additionalDimensions"
+                        name="additionalDimensions"
+                        rows={3}
+                        placeholder="Example: Ø250 mm round bar, 6 meter length, bundle cutting required."
+                        className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium resize-none"
+                      />
                     </div>
                     <div className="field-wrap space-y-3">
-                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Type of Material</label>
+                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">
+                        Type of Material
+                      </label>
                       <div className="flex flex-wrap gap-2">
-                        {["MS", "Steel", "Cast Iron", "Polymer", "Fiber", "Foam", "Rubber", "PVC", "Wood", "Ceramic", "Non Ferrous"].map((m) => (
+                        {[
+                          "MS",
+                          "Steel",
+                          "Cast Iron",
+                          "Polymer",
+                          "Fiber",
+                          "Foam",
+                          "Rubber",
+                          "PVC",
+                          "Wood",
+                          "Ceramic",
+                          "Non Ferrous",
+                        ].map((m) => (
                           <label key={m}>
-                            <input type="checkbox" name="materialType" required value={m} className="tile-input" />
+                            <input
+                              type="checkbox"
+                              name="materialType"
+                              required
+                              value={m}
+                              className="tile-input"
+                            />
                             <span className="tile-label">{m}</span>
                           </label>
                         ))}
@@ -435,13 +721,27 @@ export default function ContactPage() {
                   {/* ─ 04 Enquiry Details ─ */}
                   <fieldset className="space-y-5 border-0 p-0 m-0">
                     <legend className="flex items-center gap-3 w-full mb-5">
-                      <span className="w-[22px] h-[22px] rounded-full bg-brand-orange text-white flex items-center justify-center text-[10px] font-bold">4</span>
-                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">Enquiry Details</span>
+                      <span className="w-[22px] h-[22px] rounded-full bg-brand-orange text-white flex items-center justify-center text-[10px] font-bold">
+                        4
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">
+                        Enquiry Details
+                      </span>
                       <span className="legend-line" />
                     </legend>
                     <div className="field-wrap space-y-2">
-                      <label htmlFor="enquiryPurpose" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Purpose of Enquiry <span className="text-brand-orange">*</span></label>
-                      <select id="enquiryPurpose" name="enquiryPurpose" className="fi custom-select w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium cursor-pointer">
+                      <label
+                        htmlFor="enquiryPurpose"
+                        className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                      >
+                        Purpose of Enquiry{" "}
+                        <span className="text-brand-orange">*</span>
+                      </label>
+                      <select
+                        id="enquiryPurpose"
+                        name="enquiryPurpose"
+                        className="fi custom-select w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium cursor-pointer"
+                      >
                         <option value="">— Select purpose —</option>
                         <option value="resale">For Resale</option>
                         <option value="use">For Use</option>
@@ -450,16 +750,42 @@ export default function ContactPage() {
                       </select>
                     </div>
                     <div className="field-wrap space-y-2">
-                      <label htmlFor="requirement" className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60">Machine / Project Requirements</label>
-                      <textarea id="requirement" name="requirement" rows={5} placeholder="Tell us about the cutting capacity, materials, or specific automated models you are looking for..." className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium resize-none leading-relaxed" />
+                      <label
+                        htmlFor="requirement"
+                        className="field-label block text-xs font-bold uppercase tracking-widest text-brand-gray/60"
+                      >
+                        Machine / Project Requirements
+                      </label>
+                      <textarea
+                        id="requirement"
+                        name="requirement"
+                        rows={5}
+                        placeholder="Tell us about the cutting capacity, materials, or specific automated models you are looking for..."
+                        className="fi w-full bg-brand-light border border-gray-300 rounded-sm px-4 py-3.5 text-brand-dark text-sm font-medium resize-none leading-relaxed"
+                      />
                     </div>
                   </fieldset>
 
                   {/* ─ Submit ─ */}
-                  <button type="submit" className="submit-btn w-full py-5 rounded-sm text-base font-bold tracking-widest uppercase mt-4">
+                  <button
+                    type="submit"
+                    className="submit-btn w-full py-5 rounded-sm text-base font-bold tracking-widest uppercase mt-4"
+                  >
                     <span className="submit-btn-inner">
                       Send Inquiry
-                      <svg className="submit-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                      <svg
+                        className="submit-arrow w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
                     </span>
                   </button>
                 </form>
