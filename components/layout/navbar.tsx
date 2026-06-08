@@ -51,6 +51,7 @@ export default function Navbar() {
         </div>
 
         {/* ── CENTER BRAND ── */}
+        {/* ── CENTER BRAND ── */}
         <div className="flex flex-col items-center justify-center shrink-0 text-center mt-2">
           <Link
             href="/"
@@ -70,10 +71,17 @@ export default function Navbar() {
             <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-brand-dark mt-1 hidden sm:block">
               Accurate Cutting Systems
             </span>
-            <span className="text-2xl font-script text-brand-dark mt-0.5 hidden sm:block">
-              The Perfect Cut...{" "}
-              <span className="text-red-600">Always</span>
-            </span>
+            
+            {/* ── NEW IMAGE-BASED TAGLINE ── */}
+            <div className="mt-1 hidden sm:block">
+              <Image
+                src="/images/ACS_tagline-removebg.png" /* Update this if your filename is different */
+                alt="The Perfect Cut... Always"
+                width={200}
+                height={32}
+                className="object-contain"
+              />
+            </div>
           </Link>
         </div>
 

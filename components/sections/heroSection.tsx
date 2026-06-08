@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
 import { MagneticButton } from "@/components/ui/motion";
@@ -45,17 +46,16 @@ export default function HeroSection() {
         ease: "power4.out",
       }, "-=0.2");
 
-      // 3. Body text + CTAs + Stats stagger
+      // 3. Body text + Checkmarks + CTAs + Quick Links stagger
       tl.from(".hero-fade-up", {
         y: 20,
         opacity: 0,
         duration: 0.8,
-        stagger: 0.15,
+        stagger: 0.1,
         ease: "power4.out",
       }, "-=0.4");
 
       // --- Right Column Image Animations ---
-      // Corner brackets sequentially
       gsap.from(".corner-bracket", {
         scale: 0,
         opacity: 0,
@@ -63,20 +63,6 @@ export default function HeroSection() {
         stagger: 0.2,
         ease: "back.out(1.5)",
         delay: 0.8,
-      });
-
-      // Floating badge (delayed loop)
-      gsap.fromTo(".hero-badge",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power4.out", delay: 1.2 }
-      );
-      gsap.to(".hero-badge-inner", {
-        y: -8,
-        duration: 3,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        delay: 2, // Start looping after entrance
       });
 
       // --- Mouse Interaction setup ---
@@ -100,7 +86,6 @@ export default function HeroSection() {
           const centerX = rect.width / 2;
           const centerY = rect.height / 2;
           
-          // Max rotation: 5 degrees
           const rotateY = ((relX - centerX) / centerX) * 5;
           const rotateX = ((relY - centerY) / centerY) * -5;
 
@@ -136,7 +121,7 @@ export default function HeroSection() {
         }
         @keyframes gridDrift {
           0% { transform: translateY(0); }
-          100% { transform: translateY(4rem); } /* Matches background size */
+          100% { transform: translateY(4rem); }
         }
         .hero-spotlight {
           position: fixed;
@@ -181,12 +166,14 @@ export default function HeroSection() {
       <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-orange/20 blur-3xl pointer-events-none" />
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center gap-14 px-6 lg:flex-row lg:gap-16 lg:px-8 lg:py-24 pt-32 pb-24">
+        
         {/* Left Column */}
         <div ref={leftColRef} className="flex w-full flex-col items-start lg:w-1/2">
+          
           <div className="mb-6 flex items-center gap-3">
             <span className="hero-eyebrow-line h-1 w-8 bg-brand-orange inline-block" />
-            <span className="hero-eyebrow-text text-sm font-bold uppercase tracking-[0.25em] text-brand-orange inline-block">
-              Industrial Grade Precision
+            <span className="hero-eyebrow-text text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-brand-orange inline-block">
+              Industrial Band Sawing Solutions
             </span>
           </div>
 
@@ -194,55 +181,67 @@ export default function HeroSection() {
             <span className="hero-headline-word inline-block" style={{ clipPath: "inset(0% 0% 0% 0%)" }}>Engineered</span>{" "}
             <span className="hero-headline-word inline-block" style={{ clipPath: "inset(0% 0% 0% 0%)" }}>for</span> <br />
             <span className="hero-headline-word inline-block animate-shimmer bg-[linear-gradient(90deg,#FF5A00,#ff8a4c,#FF5A00)] bg-clip-text text-transparent" style={{ clipPath: "inset(0% 0% 0% 0%)" }}>
-              Unyielding
-            </span>{" "}
-            <span className="hero-headline-word inline-block" style={{ clipPath: "inset(0% 0% 0% 0%)" }}>Performance.</span>
+              Lower Cutting Costs.
+            </span>
           </h1>
 
-          <div className="hero-fade-up mt-6 max-w-xl">
-            <p className="text-lg leading-relaxed text-white/60">
-              Heavy-duty, high-efficiency bandsaw machines built to dominate the toughest manufacturing environments. Maximum precision, minimal downtime.
+          <div className="hero-fade-up mt-6 max-w-xl space-y-4">
+            <p className="text-base md:text-lg leading-relaxed text-white/70">
+              ACS delivers high-performance band saw machines designed to improve productivity, reduce blade consumption, and lower operating costs across demanding manufacturing environments.
+            </p>
+            <p className="text-sm md:text-base leading-relaxed text-white/50">
+              From automotive and forging industries to aerospace, defense, fabrication, and steel processing, manufacturers worldwide rely on ACS for reliable cutting performance and long-term value.
             </p>
           </div>
 
+          {/* Value Proposition Grid */}
+          <div className="hero-fade-up mt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 w-full max-w-xl">
+            {[
+              "Lower operating costs",
+              "Faster cutting performance",
+              "Reduced blade consumption",
+              "Precision and repeatability",
+              "Global support and service",
+              "Customized cutting solutions"
+            ].map((perk, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-brand-orange/20 text-brand-orange text-xs font-bold shrink-0">✓</span>
+                <span className="text-sm font-medium text-gray-300">{perk}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Buttons */}
           <div className="hero-fade-up mt-10 flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
             <MagneticButton
-              href="/machines/double-column"
-              className="inline-flex justify-center rounded-md border border-brand-gray bg-transparent px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition-colors duration-500 hover:border-brand-orange hover:bg-brand-orange/5"
+              href="/machines"
+              className="inline-flex justify-center rounded-sm border border-brand-orange bg-brand-orange px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition-all duration-300 hover:bg-orange-600 hover:shadow-[0_0_20px_rgba(255,90,0,0.4)]"
             >
-              Explore Our Machines
+              Explore Solutions
             </MagneticButton>
             <MagneticButton
               href="/contact"
-              className="inline-flex justify-center rounded-md border border-brand-gray bg-transparent px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition-colors duration-500 hover:border-brand-orange hover:bg-brand-orange/5"
+              className="inline-flex justify-center rounded-sm border border-brand-gray bg-transparent px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition-colors duration-500 hover:border-brand-orange hover:bg-brand-orange/5"
             >
               Request a Quote
             </MagneticButton>
           </div>
 
-          <div className="hero-fade-up mt-12 w-full border-t border-brand-gray pt-8">
-            <div className="flex items-center gap-10">
-              <div>
-                <p className="text-4xl font-extrabold text-white">
-                  20<span className="text-brand-orange">+</span>
-                </p>
-                <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-gray">
-                  Years Trusted
-                </p>
-              </div>
-              <div className="h-12 w-px bg-brand-gray" />
-              <div>
-                <p className="text-4xl font-extrabold text-white">ISO</p>
-                <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-gray">
-                  Certified Quality
-                </p>
-              </div>
+          {/* Bottom Quick Links */}
+          <div className="hero-fade-up mt-12 w-full border-t border-brand-gray/50 pt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-xs font-bold uppercase tracking-widest text-gray-400">
+              <Link href="/machines/double-column" className="hover:text-brand-orange transition-colors">Double Column</Link>
+              <span className="hidden sm:inline text-brand-gray">/</span>
+              <Link href="/machines/vertical-column" className="hover:text-brand-orange transition-colors">Vertical Band Saws</Link>
+              <span className="hidden sm:inline text-brand-gray">/</span>
+              <Link href="/machines/double-column" className="hover:text-brand-orange transition-colors">Miter Cutting</Link>
             </div>
           </div>
+
         </div>
 
         {/* Right Column */}
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end perspective-[1000px]">
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end perspective-[1000px] mt-10 lg:mt-0">
           <div className="relative group w-full max-w-180">
             <div className="absolute -inset-8 rounded-full bg-brand-orange/25 blur-3xl opacity-20 pointer-events-none" />
             <div className="absolute -inset-3 rounded-2xl border border-brand-orange/20 pointer-events-none" />
@@ -250,13 +249,13 @@ export default function HeroSection() {
             {/* 3D Tilt Card */}
             <div 
               ref={imageCardRef}
-              className="relative aspect-square lg:aspect-[4/3] overflow-hidden rounded-xl border border-brand-gray bg-brand-dark shadow-[0_30px_80px_rgba(0,0,0,0.45)] transform-style-3d will-change-transform"
+              className="relative aspect-square lg:aspect-[4/3] overflow-hidden rounded-sm border border-brand-gray bg-brand-dark shadow-[0_30px_80px_rgba(0,0,0,0.45)] transform-style-3d will-change-transform"
             >
               <div className="absolute inset-0 bg-linear-to-br from-brand-orange/12 via-transparent to-transparent z-10 pointer-events-none" />
               
               <Image
                 src="/images/products/ACS machine.jpeg"
-                alt="ACS Heavy-Duty Bandsaw Machine"
+                alt="ACS High-Performance Band Saw Machine"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -278,13 +277,6 @@ export default function HeroSection() {
               <div className="corner-bracket absolute top-4 right-4 z-20 h-12 w-12 border-t-2 border-r-2 border-brand-orange" style={{ transformOrigin: "top right" }} />
               <div className="corner-bracket absolute bottom-4 left-4 z-20 h-12 w-12 border-b-2 border-l-2 border-brand-orange" style={{ transformOrigin: "bottom left" }} />
               
-              {/* Floating Badge */}
-              {/* <div className="hero-badge absolute top-8 left-8 z-30">
-                <div className="hero-badge-inner bg-brand-orange/10 backdrop-blur-md border border-brand-orange/30 rounded-sm px-4 py-2 flex items-center gap-2 shadow-lg">
-                  <div className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-white">Smart Setup</span>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
