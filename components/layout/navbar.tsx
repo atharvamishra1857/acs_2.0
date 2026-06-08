@@ -1,30 +1,51 @@
-import Link from "next/link";
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { MagneticButton, motionEase } from "@/components/ui/motion";
+
+const MotionLink = motion.create(Link);
 
 export default function Navbar() {
-  return (
-    <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      <div className="w-full h-1 bg-brand-orange"></div>
+  const reducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const progressScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-      <nav className="max-w-7xl mx-auto px-6 h-32 flex items-center justify-between">
-        {/* Left Navigation Links */}
-        <div className="hidden md:flex flex-1 justify-end pr-10 lg:pr-16 gap-8 items-center">
-          <Link
+  return (
+    <motion.header
+      className="sticky top-0 z-50 w-full border-b border-brand-gray/15 bg-white/88 shadow-[0_10px_40px_rgba(0,0,0,0.06)] backdrop-blur-xl"
+      initial={reducedMotion ? false : { y: -24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: motionEase }}
+    >
+      <motion.div
+        className="h-1 w-full origin-left bg-linear-to-r from-brand-orange via-brand-orange to-brand-orange/30"
+        style={{ scaleX: progressScale }}
+      />
+
+      <nav className="mx-auto flex h-32 max-w-7xl items-center justify-between px-6 lg:px-8">
+        <div className="hidden flex-1 items-center justify-end gap-8 pr-10 lg:flex lg:pr-16">
+          <MotionLink
             href="/"
-            className="text-sm font-bold uppercase tracking-widest text-brand-gray hover:text-brand-orange transition-colors"
+            className="text-sm font-bold uppercase tracking-widest text-brand-gray transition-colors hover:text-brand-orange"
+            whileHover={reducedMotion ? undefined : { y: -2 }}
+            transition={{ duration: 0.25, ease: motionEase }}
           >
             Home
-          </Link>
-          {/* Dropdown Container */}
-          <div className="relative group py-6">
-            <Link
+          </MotionLink>
+
+          <div className="group relative py-6">
+            <MotionLink
               href="/machines"
-              className="text-sm font-bold uppercase tracking-widest text-brand-gray group-hover:text-brand-orange transition-colors flex items-center gap-1"
+              className="flex items-center gap-1 text-sm font-bold uppercase tracking-widest text-brand-gray transition-colors hover:text-brand-orange"
+              whileHover={reducedMotion ? undefined : { y: -2 }}
+              transition={{ duration: 0.25, ease: motionEase }}
             >
               Our Machines
-              {/* Dropdown Arrow Icon */}
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+              <motion.svg
+                className="h-4 w-4"
+                transition={{ duration: 0.3, ease: motionEase }}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -34,28 +55,27 @@ export default function Navbar() {
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M19 9l-7 7-7-7"
-                ></path>
-              </svg>
-            </Link>
+                />
+              </motion.svg>
+            </MotionLink>
 
-            {/* Dropdown Menu - Appears on Hover (THIS WRAPPER WAS MISSING) */}
-            <div className="absolute left-0 top-full w-64 bg-white border-t-4 border-brand-orange shadow-2xl opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 rounded-b-sm">
+            <div className="pointer-events-none absolute left-0 top-full w-64 origin-top-left rounded-b-sm border-t-4 border-brand-orange bg-white shadow-[0_24px_70px_rgba(0,0,0,0.18)] opacity-0 translate-y-3 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0">
               <div className="flex flex-col">
                 <Link
                   href="/machines/double-column"
-                  className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark hover:bg-brand-light hover:text-brand-orange transition-colors border-b border-gray-100"
+                  className="border-b border-brand-gray/20 px-6 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark transition-colors hover:bg-brand-light hover:text-brand-orange"
                 >
                   Double Column Bandsaw
                 </Link>
                 <Link
                   href="/machines/vertical-column"
-                  className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark hover:bg-brand-light hover:text-brand-orange transition-colors border-b border-gray-100"
+                  className="border-b border-brand-gray/20 px-6 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark transition-colors hover:bg-brand-light hover:text-brand-orange"
                 >
                   Vertical Column Bandsaw
                 </Link>
                 <Link
                   href="/machines/circular-saw"
-                  className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark hover:bg-brand-light hover:text-brand-orange transition-colors"
+                  className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark transition-colors hover:bg-brand-light hover:text-brand-orange"
                 >
                   Circular Saw
                 </Link>
@@ -64,70 +84,63 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Center Brand Identity (The Focal Point) */}
-        <div className="flex flex-col items-center justify-center shrink-0 text-center mt-2">
-          <Link
-            href="/"
-            className="flex flex-col items-center group cursor-pointer"
-          >
-            {/* 1. The Orange Saw-Tooth Image (Export this block without text from your design file) */}
-            <div className="relative w-36 h-16 group-hover:scale-105 transition-transform duration-300">
+        <motion.div
+          className="shrink-0 text-center"
+          initial={reducedMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: motionEase }}
+        >
+          <Link href="/" className="flex cursor-pointer flex-col items-center group">
+            <motion.div
+              className="relative h-16 w-36"
+              whileHover={reducedMotion ? undefined : { y: -2 }}
+              transition={{ duration: 0.3, ease: motionEase }}
+            >
               <Image
-                src="/images/ACS_LOGO.png" /* Update with your exact sliced image path */
+                src="/images/ACS_LOGO.png"
                 alt="ACS Logo Block"
                 fill
                 className="object-contain"
+                sizes="(max-width: 768px) 150px, 200px"
                 priority
               />
-            </div>
+            </motion.div>
 
-            {/* 2. The Structural Full Form */}
-            <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-brand-dark mt-1">
+            <span className="mt-1 text-[11px] font-extrabold uppercase tracking-[0.25em] text-brand-dark transition-transform duration-300 group-hover:-translate-y-0.5">
               Accurate Cutting Systems
             </span>
 
-            {/* 3. The Handwritten Tagline */}
-            <span className="text-2xl font-script text-brand-dark mt-0.5">
-              The Perfect Cut... <span className="text-red-600">Always</span>
+            <span className="mt-0.5 font-script text-2xl text-brand-dark transition-transform duration-300 group-hover:-translate-y-0.5">
+              The Perfect Cut... <span className="text-brand-orange">Always</span>
             </span>
           </Link>
-        </div>
+        </motion.div>
 
-        {/* Right Navigation Links & CTA */}
-        <div className="hidden md:flex flex-1 justify-start pl-10 lg:pl-16 gap-8 items-center">
-          <Link
+        <div className="hidden flex-1 items-center justify-start gap-8 pl-10 lg:flex lg:pl-16">
+          <MotionLink
             href="/about"
-            className="text-sm font-bold uppercase tracking-widest text-brand-gray hover:text-brand-orange transition-colors"
+            className="text-sm font-bold uppercase tracking-widest text-brand-gray transition-colors hover:text-brand-orange"
+            whileHover={reducedMotion ? undefined : { y: -2 }}
+            transition={{ duration: 0.25, ease: motionEase }}
           >
             About Us
-          </Link>
-          <Link
+          </MotionLink>
+          <MagneticButton
             href="/contact"
-            className="px-6 py-2.5 bg-brand-dark text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-orange transition-colors rounded-sm shadow-md"
+              className="inline-flex rounded-sm bg-brand-dark px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-[0_10px_20px_rgba(0,0,0,0.12)] transition-colors hover:bg-brand-orange"
           >
             Get a Quote
-          </Link>
+          </MagneticButton>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex-1 flex justify-end">
-          <button className="p-2 text-brand-dark focus:outline-none">
-            <svg
-              className="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
+        <div className="flex flex-1 justify-end md:hidden">
+          <button className="p-2 text-brand-dark focus:outline-none" aria-label="Open navigation menu">
+            <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
       </nav>
-    </header>
+    </motion.header>
   );
 }

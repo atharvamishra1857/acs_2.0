@@ -1,20 +1,44 @@
 @import "tailwindcss";
 
 @theme {
-  /* Your ACS Colors */
-  --color-brand-orange: #FF5A00; 
-  --color-brand-dark: #111111;   
-  --color-brand-gray: #2D2D2D;   
-  --color-brand-light: #F4F4F5;  
-  
-  /* Link Next.js font variables to Tailwind */
-  --font-sans: var(--font-inter);
-  --font-script: var(--font-script);
+  --color-brand-orange: #FF5A00;
+  --color-brand-dark: #111111;
+  --color-brand-gray: #2D2D2D;
+  --color-brand-light: #F4F4F5;
+}
+
+:root {
+  --motion-ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-duration-fast: 300ms;
+  --motion-duration-base: 500ms;
+  --motion-duration-slow: 900ms;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-brand-light);
+    color: var(--color-brand-dark);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at top left, rgba(255, 90, 0, 0.08), transparent 32%),
+      radial-gradient(circle at top right, rgba(255, 90, 0, 0.05), transparent 28%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 18%);
+    opacity: 0.85;
+    z-index: -1;
+  }
+
+  ::selection {
+    background: rgba(255, 90, 0, 0.18);
     color: var(--color-brand-dark);
   }
 }
@@ -30,4 +54,15 @@ body {
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none; 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

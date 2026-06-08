@@ -22,7 +22,7 @@ export default function ContactPage() {
       <style>{`
         /* ── Keyframes ── */
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(32px); }
+          from { opacity: 0; transform: translateY(24px); }
           to   { opacity: 1; transform: translateY(0);    }
         }
         @keyframes fadeIn {
@@ -33,29 +33,13 @@ export default function ContactPage() {
           from { opacity: 0; transform: translateX(-24px); }
           to   { opacity: 1; transform: translateX(0);     }
         }
-        @keyframes scanline {
-          0%   { transform: translateY(-100%); }
-          100% { transform: translateY(400%);  }
-        }
-        @keyframes pulseOrange {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(255, 90, 0, 0); }
-          50%       { box-shadow: 0 0 0 6px rgba(255, 90, 0, 0.18); }
-        }
         @keyframes borderDraw {
           from { clip-path: inset(0 100% 0 0); }
           to   { clip-path: inset(0 0% 0 0);   }
         }
-        @keyframes shimmer {
-          0%   { background-position: -200% center; }
-          100% { background-position: 200% center;  }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px);  }
-          50%       { transform: translateY(-6px); }
-        }
         @keyframes countUp {
-          from { opacity: 0; transform: scale(0.85); }
-          to   { opacity: 1; transform: scale(1);    }
+          from { opacity: 0; transform: translateY(4px); }
+          to   { opacity: 1; transform: translateY(0);    }
         }
 
         /* ── Hero text stagger ── */
@@ -67,16 +51,6 @@ export default function ContactPage() {
         .hero-line-2 { animation-delay: 0.2s;  }
         .hero-eyebrow { animation: fadeIn 0.7s ease 0.4s both; }
         .hero-sub     { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
-
-        /* ── Scanline sweep on hero ── */
-        .hero-scanline {
-          position: absolute;
-          left: 0; right: 0;
-          height: 80px;
-          background: linear-gradient(to bottom, transparent, rgba(255,90,0,0.06), transparent);
-          animation: scanline 4s ease-in-out infinite;
-          pointer-events: none;
-        }
 
         /* ── Section entrance (scroll-fade emulated via delay) ── */
         .section-enter-left  { animation: slideInLeft 0.85s cubic-bezier(0.16,1,0.3,1) 0.15s both; }
@@ -145,7 +119,6 @@ export default function ContactPage() {
         .contact-item:hover {
           border-color: rgba(255,90,0,0.2);
           background: rgba(255,255,255,0.7);
-          transform: translateX(4px);
         }
         .contact-item:hover::before {
           transform: scaleY(1);
@@ -246,11 +219,11 @@ export default function ContactPage() {
           inset: 2px;
           border-radius: 50%;
           background: currentColor;
-          transform: scale(0);
-          transition: transform 0.2s cubic-bezier(0.16,1,0.3,1);
+          opacity: 0;
+          transition: opacity 0.2s cubic-bezier(0.16,1,0.3,1);
         }
         .radio-input:checked + .radio-label .radio-dot::after {
-          transform: scale(1);
+          opacity: 1;
         }
 
         /* ── Custom select arrow ── */
@@ -340,16 +313,10 @@ export default function ContactPage() {
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
         input[type=number] { -moz-appearance: textfield; }
 
-        /* ── Accent bar on form ── */
         .form-top-bar {
           height: 3px;
-          background: linear-gradient(to right, #ff5a00, #ff8c42, #ff5a00);
-          background-size: 200% auto;
-          animation: shimmer 3s linear infinite;
+          background: #ff5a00;
         }
-
-        /* ── Scroll hint arrow ── */
-        .scroll-hint { animation: float 2.5s ease-in-out infinite; }
       `}</style>
 
       {/* ══════════════ HERO ══════════════ */}
@@ -357,25 +324,19 @@ export default function ContactPage() {
         {/* Grid background */}
         <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
-        {/* Scanline sweep */}
-        <div className="hero-scanline" />
-
         {/* Side accent lines */}
         <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand-orange/30 to-transparent" />
         <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand-orange/30 to-transparent" />
 
-        {/* Floating tag */}
         <div
           className="absolute hidden lg:flex items-center gap-2 top-6 right-8"
           style={{
-            animation: "float 5s ease-in-out infinite",
             background: "rgba(255,90,0,0.08)",
             border: "1px solid rgba(255,90,0,0.25)",
             borderRadius: "2px",
             padding: "5px 12px",
           }}
         >
-          <span className="tag-dot" />
           <span className="text-brand-orange text-xs font-bold tracking-widest uppercase opacity-80">
             Engineering Enquiries
           </span>
@@ -397,7 +358,7 @@ export default function ContactPage() {
           </p>
 
           {/* Scroll hint */}
-          <div className="scroll-hint mt-10 flex justify-center">
+          <div className="mt-10 flex justify-center">
             <svg
               width="22"
               height="22"
@@ -432,7 +393,7 @@ export default function ContactPage() {
                   "borderDraw 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s both",
               }}
             />
-            <p className="text-gray-500 mb-10 leading-relaxed text-base">
+            <p className="text-brand-gray mb-10 leading-relaxed text-base">
               Whether you need a custom automated bandsaw configuration, bulk
               ordering details, or technical specifications — our engineering
               team is ready to assist.
@@ -481,7 +442,7 @@ export default function ContactPage() {
                 animation: "fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.55s both",
               }}
             >
-              <p className="text-xs font-mono text-gray-400 leading-7 tracking-wide">
+              <p className="text-xs font-mono text-white/60 leading-7 tracking-wide">
                 <span className="text-brand-orange">// </span>Response time:
                 &lt; 24 hours
                 <br />
@@ -545,7 +506,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="name"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Full Name <span className="text-brand-orange">*</span>
                         </label>
@@ -563,7 +524,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="phone"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Phone <span className="text-brand-orange">*</span>
                         </label>
@@ -581,7 +542,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="email"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Business Email{" "}
                           <span className="text-brand-orange">*</span>
@@ -600,7 +561,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="company"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Company Name{" "}
                           <span className="text-brand-orange">*</span>
@@ -632,7 +593,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="bandsawType"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Type of Bandsaw{" "}
                           <span className="text-brand-orange">*</span>
@@ -655,7 +616,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="quantity"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Quantity Required{" "}
                           <span className="text-brand-orange">*</span>
@@ -674,7 +635,7 @@ export default function ContactPage() {
 
                     {/* Machine Type — radio tiles */}
                     <div className="field-wrap space-y-3">
-                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400">
+                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-white/60">
                         Machine Type{" "}
                         <span className="text-brand-orange">*</span>
                       </label>
@@ -710,7 +671,7 @@ export default function ContactPage() {
 
                     {/* Size / Shape */}
                     <div className="field-wrap space-y-3">
-                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400">
+                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-white/60">
                         Size / Shape of Material to Cut
                       </label>
                       <div className="flex flex-wrap gap-2">
@@ -740,7 +701,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="materialWidth"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Width (mm)
                         </label>
@@ -759,7 +720,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="materialHeight"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Height (mm)
                         </label>
@@ -778,7 +739,7 @@ export default function ContactPage() {
                       <div className="field-wrap space-y-2">
                         <label
                           htmlFor="materialLength"
-                          className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                          className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                         >
                           Length (mm)
                         </label>
@@ -797,7 +758,7 @@ export default function ContactPage() {
                     <div className="field-wrap space-y-2">
                       <label
                         htmlFor="additionalDimensions"
-                        className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                        className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                       >
                         Additional Size Information
                       </label>
@@ -813,7 +774,7 @@ export default function ContactPage() {
 
                     {/* Type of Material */}
                     <div className="field-wrap space-y-3">
-                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400">
+                      <label className="field-label block text-xs font-bold uppercase tracking-widest text-white/60">
                         Type of Material
                       </label>
 
@@ -860,7 +821,7 @@ export default function ContactPage() {
                     <div className="field-wrap space-y-2">
                       <label
                         htmlFor="enquiryPurpose"
-                        className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                        className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                       >
                         Purpose of Enquiry{" "}
                         <span className="text-brand-orange">*</span>
@@ -882,7 +843,7 @@ export default function ContactPage() {
                     <div className="field-wrap space-y-2">
                       <label
                         htmlFor="requirement"
-                        className="field-label block text-xs font-bold uppercase tracking-widest text-gray-400"
+                        className="field-label block text-xs font-bold uppercase tracking-widest text-white/60"
                       >
                         Machine / Project Requirements
                       </label>

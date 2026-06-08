@@ -94,7 +94,7 @@ const StatBox = ({
         {count}{suffix}
       </span>
       <h3 className="text-base font-bold uppercase tracking-widest text-white mb-2">{title}</h3>
-      <p className="text-sm text-gray-400 leading-relaxed">{description}</p>
+      <p className="text-sm text-white/60 leading-relaxed">{description}</p>
     </div>
   );
 };
@@ -134,9 +134,9 @@ const Reveal = ({
 }) => {
   const { ref, visible } = useReveal();
   const from =
-    direction === "up" ? "translateY(40px)"
-    : direction === "left" ? "translateX(-40px)"
-    : direction === "right" ? "translateX(40px)"
+    direction === "up" ? "translateY(24px)"
+    : direction === "left" ? "translateX(-24px)"
+    : direction === "right" ? "translateX(24px)"
     : "none";
 
   return (
@@ -188,7 +188,6 @@ const ContactItem = ({
       <span
         className="text-3xl block mb-3"
         style={{
-          transform: hovered ? "scale(1.15) rotate(-5deg)" : "scale(1) rotate(0deg)",
           transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1)",
           display: "inline-block",
         }}
@@ -217,7 +216,7 @@ export default function AboutPage() {
       <style>{`
         /* ── Keyframes ── */
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(36px); }
+          from { opacity: 0; transform: translateY(24px); }
           to   { opacity: 1; transform: translateY(0);    }
         }
         @keyframes fadeIn {
@@ -228,28 +227,6 @@ export default function AboutPage() {
         }
         @keyframes drawLineH {
           from { width: 0; } to { width: 6rem; }
-        }
-        @keyframes scanline {
-          0%   { transform: translateY(-100%); opacity: 0; }
-          10%  { opacity: 1; }
-          90%  { opacity: 1; }
-          100% { transform: translateY(1200%); opacity: 0; }
-        }
-        @keyframes shimmer {
-          0%   { background-position: -400% center; }
-          100% { background-position: 400% center;  }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0);   }
-          50%       { transform: translateY(-7px); }
-        }
-        @keyframes pulse-dot {
-          0%, 100% { transform: scale(1);   opacity: 1; }
-          50%       { transform: scale(1.5); opacity: 0.5; }
-        }
-        @keyframes borderGlow {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(255,90,0,0); }
-          50%       { box-shadow: 0 0 0 4px rgba(255,90,0,0.2); }
         }
 
         /* ── Hero text ── */
@@ -262,7 +239,7 @@ export default function AboutPage() {
         .h-w3 { animation-delay: 0.35s; }
         .h-script { animation: fadeIn 1s ease 0.55s both; }
         .h-body    { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.7s both; }
-        .h-scroll  { animation: float 2.8s ease-in-out infinite; margin-top: 32px; }
+        .h-scroll  { margin-top: 32px; }
 
         /* ── Scanline ── */
         .scanline {
@@ -287,7 +264,7 @@ export default function AboutPage() {
                       box-shadow 0.4s ease;
         }
         .quote-card:hover {
-          transform: translateY(-6px) scale(1.01);
+          transform: translateY(-4px);
           box-shadow: 0 32px 64px -12px rgba(0,0,0,0.18), 4px 0 0 0 var(--brand-orange);
         }
         .quote-card .partner-btn {
@@ -317,12 +294,12 @@ export default function AboutPage() {
           opacity: 0;
           transition: opacity 0.4s ease;
         }
-        .vm-card:hover { transform: translateY(-6px); box-shadow: 0 28px 56px -8px rgba(0,0,0,0.14); }
+        .vm-card:hover { transform: translateY(-4px); box-shadow: 0 28px 56px -8px rgba(0,0,0,0.14); }
         .vm-card:hover::before { opacity: 1; }
         .vm-icon {
           transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
         }
-        .vm-card:hover .vm-icon { transform: scale(1.12) rotate(-8deg); }
+        .vm-card:hover .vm-icon { transform: translateY(-2px); }
 
         /* ── Profile paragraphs ── */
         .profile-para {
@@ -341,7 +318,6 @@ export default function AboutPage() {
 
         /* ── Team section ── */
         .team-quote-mark {
-          animation: float 4s ease-in-out infinite;
           display: inline-block;
         }
 
@@ -357,7 +333,7 @@ export default function AboutPage() {
         .contact-item-wrap:hover .contact-icon-wrap {
           background: rgba(255,90,0,0.2);
           border-color: rgba(255,90,0,0.5);
-          transform: scale(1.1) rotate(-5deg);
+          transform: translateY(-2px);
         }
         .contact-item-wrap a {
           transition: color 0.25s;
@@ -371,11 +347,7 @@ export default function AboutPage() {
         {/* Parallax grid */}
         <div
           className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:4rem_4rem]"
-          style={{ transform: `translateY(${scrollY * 0.18}px)` }}
         />
-
-        {/* Scanline sweep */}
-        <div className="scanline" />
 
         {/* Side accent lines */}
         <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand-orange/30 to-transparent" />
@@ -384,7 +356,7 @@ export default function AboutPage() {
         <div className="relative z-10 max-w-4xl mx-auto px-6">
           {/* Eyebrow dot */}
           <div className="flex items-center justify-center gap-2 mb-6" style={{ animation: "fadeIn 0.6s ease 0.1s both" }}>
-            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#ff5a00", display: "inline-block", animation: "pulse-dot 2s ease infinite" }} />
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#ff5a00", display: "inline-block" }} />
             <span className="text-brand-orange text-xs font-bold tracking-[0.25em] uppercase opacity-80">
               Accurate Cutting Systems
             </span>
@@ -400,7 +372,7 @@ export default function AboutPage() {
             The Perfect Cut... Always
           </p>
 
-          <p className="h-body text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="h-body text-lg text-white/50 max-w-2xl mx-auto leading-relaxed">
             ACS - Accurate Cutting Systems has built a reputation for high precision and quality bandsaws that work efficiently to give excellent returns on your investment.
           </p>
 
@@ -438,7 +410,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
           {/* Text paragraphs */}
-          <Reveal direction="left" delay={100} className="space-y-6 text-lg text-gray-700 leading-relaxed">
+          <Reveal direction="left" delay={100} className="space-y-6 text-lg text-brand-dark leading-relaxed">
             <p className="profile-para">
               <strong className="text-brand-dark">ACS – Accurate Cutting Systems</strong> was founded in 2006 by a team of professionals from the field of Industrial Cutting Solutions.
             </p>
@@ -458,7 +430,6 @@ export default function AboutPage() {
             <div className="quote-card bg-white p-10 md:p-14 rounded-sm shadow-xl border-l-8 border-brand-orange relative">
               <span
                 className="absolute top-4 left-5 text-7xl text-gray-100 font-serif leading-none select-none"
-                style={{ animation: "float 5s ease-in-out infinite" }}
               >
                 "
               </span>
@@ -543,7 +514,6 @@ export default function AboutPage() {
         {/* Background accent */}
         <div
           className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#ff5a00_1px,transparent_1px),linear-gradient(to_bottom,#ff5a00_1px,transparent_1px)] bg-[size:3rem_3rem]"
-          style={{ transform: `translateY(${scrollY * -0.06}px)` }}
         />
         {/* Team Image */}
 
@@ -567,7 +537,6 @@ export default function AboutPage() {
           transition-all
           duration-700
           ease-[cubic-bezier(0.22,1,0.36,1)]
-          group-hover:scale-105
         "
       />
     </div>
@@ -589,7 +558,7 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal direction="up" delay={200}>
-            <p className="text-xl text-gray-500 mb-8 leading-relaxed font-medium">
+            <p className="text-xl text-brand-gray mb-8 leading-relaxed font-medium">
               <span className="team-quote-mark text-brand-orange text-3xl font-serif mr-1">"</span>
               At ACS, we highly value a culture of collaboration and service.
               <span className="team-quote-mark text-brand-orange text-3xl font-serif ml-1">"</span>
@@ -631,7 +600,7 @@ export default function AboutPage() {
           </ContactItem>
 
           <ContactItem icon="📍" label="India Works" delay={300}>
-            <p className="text-sm text-gray-300 leading-relaxed">
+            <p className="text-sm text-white/50 leading-relaxed">
               Survey No. 52/3, Lane No. 4,<br />
               Maruti Nagar, Vadgaon Sheri,<br />
               Pune 411014.
