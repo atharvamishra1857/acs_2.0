@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { MagneticButton, motionEase } from "@/components/ui/motion";
+import { useState, useEffect } from "react";
 
 const MotionLink = motion.create(Link);
 
@@ -11,10 +12,23 @@ export default function Navbar() {
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const progressScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <motion.header
-      className="sticky top-0 z-50 w-full border-b border-brand-gray/15 bg-white/88 shadow-[0_10px_40px_rgba(0,0,0,0.06)] backdrop-blur-xl"
+      className={`sticky top-0 z-50 w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        isScrolled
+          ? "border-b border-brand-gray/15 bg-white/88 shadow-[0_10px_40px_rgba(0,0,0,0.06)] backdrop-blur-xl"
+          : "border-b border-transparent bg-white shadow-none"
+      }`}
       initial={reducedMotion ? false : { y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: motionEase }}
