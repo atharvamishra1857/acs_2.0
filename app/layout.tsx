@@ -4,6 +4,7 @@ import { Inter, Dancing_Script } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import GlobalSpotlight from "@/components/ui/globalspotlight";
 
 // 2. Configure fonts with CSS variables
 const inter = Inter({ 
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body 
         className={`${inter.variable} ${scriptFont.variable} font-sans bg-brand-light text-brand-dark antialiased min-h-screen flex flex-col`}
       >
+        <GlobalSpotlight />
         <Navbar />
         <main className="flex-grow">
           {children}

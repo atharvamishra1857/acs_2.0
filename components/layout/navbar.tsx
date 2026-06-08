@@ -52,6 +52,7 @@ export default function Navbar() {
 
         {/* ── CENTER BRAND ── */}
         {/* ── CENTER BRAND ── */}
+        {/* ── CENTER BRAND ── */}
         <div className="flex flex-col items-center justify-center shrink-0 text-center mt-2">
           <Link
             href="/"
@@ -72,14 +73,14 @@ export default function Navbar() {
               Accurate Cutting Systems
             </span>
             
-            {/* ── NEW IMAGE-BASED TAGLINE ── */}
-            <div className="mt-1 hidden sm:block">
+            {/* ── NEW IMAGE-BASED TAGLINE (Now visible on mobile) ── */}
+            <div className="mt-1.5 flex justify-center">
               <Image
-                src="/images/ACS_tagline-removebg.png" /* Update this if your filename is different */
+                src="/images/ACS_tagline-removebg.png"
                 alt="The Perfect Cut... Always"
                 width={200}
                 height={32}
-                className="object-contain"
+                className="object-contain w-40 sm:w-[200px]"
               />
             </div>
           </Link>

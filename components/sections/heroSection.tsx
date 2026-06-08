@@ -13,10 +13,6 @@ export default function HeroSection() {
   const imageCardRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
 
-  // Mouse tracking for tilt and spotlight
-  const mouseX = useRef(0);
-  const mouseY = useRef(0);
-
   useEffect(() => {
     if (reducedMotion) return;
 
@@ -24,61 +20,21 @@ export default function HeroSection() {
       // --- Left Column Timeline ---
       const tl = gsap.timeline({ delay: 0.2 });
 
-      // 1. Eyebrow line draws in
-      tl.from(".hero-eyebrow-line", {
-        width: 0,
-        duration: 0.6,
-        ease: "power4.out",
-      });
-      tl.from(".hero-eyebrow-text", {
-        opacity: 0,
-        x: -10,
-        duration: 0.6,
-        ease: "power4.out",
-      }, "-=0.4");
-
-      // 2. Headline words clip-path reveal
-      tl.from(".hero-headline-word", {
-        y: 60,
-        clipPath: "inset(100% 0% 0% 0%)",
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power4.out",
-      }, "-=0.2");
-
-      // 3. Body text + Checkmarks + CTAs + Quick Links stagger
-      tl.from(".hero-fade-up", {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power4.out",
-      }, "-=0.4");
+      tl.from(".hero-eyebrow-line", { width: 0, duration: 0.6, ease: "power4.out" });
+      tl.from(".hero-eyebrow-text", { opacity: 0, x: -10, duration: 0.6, ease: "power4.out" }, "-=0.4");
+      tl.from(".hero-headline-word", { y: 60, clipPath: "inset(100% 0% 0% 0%)", duration: 0.8, stagger: 0.1, ease: "power4.out" }, "-=0.2");
+      tl.from(".hero-fade-up", { y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power4.out" }, "-=0.4");
 
       // --- Right Column Image Animations ---
-      gsap.from(".corner-bracket", {
-        scale: 0,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.2,
-        ease: "back.out(1.5)",
-        delay: 0.8,
-      });
+      gsap.from(".corner-bracket", { scale: 0, opacity: 0, duration: 0.6, stagger: 0.2, ease: "back.out(1.5)", delay: 0.8 });
 
-      // --- Mouse Interaction setup ---
+      // --- Local Mouse Interaction (Card Tilt & Specular Highlight only) ---
       const xTo = gsap.quickTo(imageCardRef.current, "rotationY", { duration: 0.4, ease: "power3.out" });
       const yTo = gsap.quickTo(imageCardRef.current, "rotationX", { duration: 0.4, ease: "power3.out" });
       const highlightX = gsap.quickTo(".specular-highlight", "x", { duration: 0.3, ease: "power2.out" });
       const highlightY = gsap.quickTo(".specular-highlight", "y", { duration: 0.3, ease: "power2.out" });
-      const spotlightX = gsap.quickTo(".hero-spotlight", "left", { duration: 0.6, ease: "power2.out" });
-      const spotlightY = gsap.quickTo(".hero-spotlight", "top", { duration: 0.6, ease: "power2.out" });
 
       const handleMouseMove = (e: MouseEvent) => {
-        // Global spotlight
-        spotlightX(e.clientX);
-        spotlightY(e.clientY);
-
-        // Image tilt and specular highlight
         if (imageCardRef.current) {
           const rect = imageCardRef.current.getBoundingClientRect();
           const relX = e.clientX - rect.left;
@@ -123,16 +79,6 @@ export default function HeroSection() {
           0% { transform: translateY(0); }
           100% { transform: translateY(4rem); }
         }
-        .hero-spotlight {
-          position: fixed;
-          width: 600px;
-          height: 600px;
-          background: radial-gradient(circle, rgba(255,90,0,0.06) 0%, transparent 70%);
-          border-radius: 50%;
-          pointer-events: none;
-          transform: translate(-50%, -50%);
-          z-index: 0;
-        }
         .animate-shimmer {
           background-size: 200% auto;
           animation: textShimmer 4s linear infinite;
@@ -156,12 +102,8 @@ export default function HeroSection() {
         }
       `}</style>
 
-      {/* Ambient Spotlight */}
-      {!reducedMotion && <div className="hero-spotlight" />}
-
       {/* Grid Drift */}
       <div className="absolute -top-16 -bottom-16 -left-16 -right-16 opacity-12 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:4rem_4rem] bg-grid-drift" />
-      
       <div className="absolute inset-x-0 top-0 h-64 bg-linear-to-b from-brand-orange/12 via-transparent to-transparent pointer-events-none" />
       <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-orange/20 blur-3xl pointer-events-none" />
 
@@ -169,7 +111,6 @@ export default function HeroSection() {
         
         {/* Left Column */}
         <div ref={leftColRef} className="flex w-full flex-col items-start lg:w-1/2">
-          
           <div className="mb-6 flex items-center gap-3">
             <span className="hero-eyebrow-line h-1 w-8 bg-brand-orange inline-block" />
             <span className="hero-eyebrow-text text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-brand-orange inline-block">
@@ -237,7 +178,6 @@ export default function HeroSection() {
               <Link href="/machines/double-column" className="hover:text-brand-orange transition-colors">Miter Cutting</Link>
             </div>
           </div>
-
         </div>
 
         {/* Right Column */}
@@ -261,7 +201,6 @@ export default function HeroSection() {
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center scale-[1.05]"
               />
-
               <div className="absolute inset-0 bg-linear-to-t from-brand-dark/90 via-transparent to-transparent opacity-85 z-10 pointer-events-none" />
 
               {/* Specular Highlight tracking mouse */}
@@ -270,13 +209,10 @@ export default function HeroSection() {
                 style={{ top: -100, left: -100 }}
               />
 
-              {/* Scanline */}
               <div className="scanline" />
 
-              {/* Corner Brackets */}
               <div className="corner-bracket absolute top-4 right-4 z-20 h-12 w-12 border-t-2 border-r-2 border-brand-orange" style={{ transformOrigin: "top right" }} />
               <div className="corner-bracket absolute bottom-4 left-4 z-20 h-12 w-12 border-b-2 border-l-2 border-brand-orange" style={{ transformOrigin: "bottom left" }} />
-              
             </div>
           </div>
         </div>

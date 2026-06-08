@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Reveal, motionEase } from "@/components/ui/motion";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
@@ -49,10 +50,18 @@ export default function Footer() {
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-white/60">
               Engineered for unyielding performance. We manufacture heavy-duty, industrial bandsaw machines built to dominate the toughest manufacturing environments.
-              <br />
-              <br />
-              <span className="italic text-brand-orange">The Perfect Cut Always...</span>
             </p>
+            
+            {/* ── THE MONOCHROME TAGLINE IMAGE ── */}
+            <div className="mt-6">
+              <Image
+                src="/images/ACS_tagline-removebg.png"
+                alt="The Perfect Cut... Always"
+                width={180}
+                height={28}
+                className="object-contain brightness-0 invert opacity-80"
+              />
+            </div>
           </div>
 
           <div className="footer-col md:col-span-4 lg:col-span-3">
