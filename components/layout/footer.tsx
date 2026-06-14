@@ -43,7 +43,7 @@ export default function Footer() {
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-12">
           <div className="footer-col md:col-span-4 lg:col-span-5">
             <div className="mb-6 flex flex-col items-start">
-              <span className="mb-1 text-4xl font-black leading-none tracking-tighter text-brand-orange">ACS</span>
+              <span className="mb-1 text-4xl font-black leading-none tracking-tighter text-brand-orange"><Image src="/images/ACS_LOGO.png" alt="ACS" width={100} height={100}/></span>
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/50">
                 Accurate Cutting Systems
               </span>
