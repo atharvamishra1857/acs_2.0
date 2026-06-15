@@ -25,45 +25,26 @@ export default function HeroSection() {
       tl.from(".hero-headline-word", { y: 60, clipPath: "inset(100% 0% 0% 0%)", duration: 0.8, stagger: 0.1, ease: "power4.out" }, "-=0.2");
       tl.from(".hero-fade-up", { y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power4.out" }, "-=0.4");
 
-      // --- Right Column Image Animations ---
-      gsap.from(".corner-bracket", { scale: 0, opacity: 0, duration: 0.6, stagger: 0.2, ease: "back.out(1.5)", delay: 0.8 });
+      // --- Right Column Image Animations (Entrance Only) ---
+      gsap.from(imageCardRef.current, { 
+        y: 40, 
+        opacity: 0, 
+        duration: 1.2, 
+        ease: "power3.out", 
+        delay: 0.4 
+      });
+      
+      gsap.from(".corner-bracket", { 
+        scale: 0, 
+        opacity: 0, 
+        duration: 0.6, 
+        stagger: 0.2, 
+        ease: "back.out(1.5)", 
+        delay: 0.8 
+      });
 
-      // --- Local Mouse Interaction (Card Tilt & Specular Highlight only) ---
-      const xTo = gsap.quickTo(imageCardRef.current, "rotationY", { duration: 0.4, ease: "power3.out" });
-      const yTo = gsap.quickTo(imageCardRef.current, "rotationX", { duration: 0.4, ease: "power3.out" });
-      const highlightX = gsap.quickTo(".specular-highlight", "x", { duration: 0.3, ease: "power2.out" });
-      const highlightY = gsap.quickTo(".specular-highlight", "y", { duration: 0.3, ease: "power2.out" });
+      // Mouse tracking events have been completely removed for a solid, static feel.
 
-      const handleMouseMove = (e: MouseEvent) => {
-        if (imageCardRef.current) {
-          const rect = imageCardRef.current.getBoundingClientRect();
-          const relX = e.clientX - rect.left;
-          const relY = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          
-          const rotateY = ((relX - centerX) / centerX) * 5;
-          const rotateX = ((relY - centerY) / centerY) * -5;
-
-          xTo(rotateY);
-          yTo(rotateX);
-          highlightX(relX);
-          highlightY(relY);
-        }
-      };
-
-      const handleMouseLeave = () => {
-        xTo(0);
-        yTo(0);
-      };
-
-      window.addEventListener("mousemove", handleMouseMove);
-      imageCardRef.current?.addEventListener("mouseleave", handleMouseLeave);
-
-      return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
-        imageCardRef.current?.removeEventListener("mouseleave", handleMouseLeave);
-      };
     }, sectionRef);
 
     return () => ctx.revert();
@@ -86,23 +67,9 @@ export default function HeroSection() {
         @keyframes textShimmer {
           to { background-position: 200% center; }
         }
-        .scanline {
-          position: absolute;
-          left: 0;
-          right: 0;
-          height: 100px;
-          background: linear-gradient(to bottom, transparent, rgba(255,90,0,0.1), transparent);
-          pointer-events: none;
-          animation: scanDown 5s linear infinite;
-          z-index: 10;
-        }
-        @keyframes scanDown {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(400px); }
-        }
       `}</style>
 
-      {/* Grid Drift */}
+      {/* Grid Drift Background */}
       <div className="absolute -top-16 -bottom-16 -left-16 -right-16 opacity-12 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:4rem_4rem] bg-grid-drift" />
       <div className="absolute inset-x-0 top-0 h-64 bg-linear-to-b from-brand-orange/12 via-transparent to-transparent pointer-events-none" />
       <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-orange/20 blur-3xl pointer-events-none" />
@@ -181,15 +148,15 @@ export default function HeroSection() {
         </div>
 
         {/* Right Column */}
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end perspective-[1000px] mt-10 lg:mt-0">
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-10 lg:mt-0">
           <div className="relative group w-full max-w-180">
             <div className="absolute -inset-8 rounded-full bg-brand-orange/25 blur-3xl opacity-20 pointer-events-none" />
             <div className="absolute -inset-3 rounded-2xl border border-brand-orange/20 pointer-events-none" />
 
-            {/* 3D Tilt Card */}
+            {/* Static Card */}
             <div 
               ref={imageCardRef}
-              className="relative aspect-square lg:aspect-[4/3] overflow-hidden rounded-sm border border-brand-gray bg-brand-dark shadow-[0_30px_80px_rgba(0,0,0,0.45)] transform-style-3d will-change-transform"
+              className="relative aspect-square lg:aspect-[4/3] overflow-hidden rounded-sm border border-brand-gray bg-brand-dark shadow-[0_30px_80px_rgba(0,0,0,0.45)]"
             >
               <div className="absolute inset-0 bg-linear-to-br from-brand-orange/12 via-transparent to-transparent z-10 pointer-events-none" />
               
@@ -202,14 +169,6 @@ export default function HeroSection() {
                 className="object-cover object-center scale-[1.05]"
               />
               <div className="absolute inset-0 bg-linear-to-t from-brand-dark/90 via-transparent to-transparent opacity-85 z-10 pointer-events-none" />
-
-              {/* Specular Highlight tracking mouse */}
-              <div 
-                className="specular-highlight absolute w-[200px] h-[200px] bg-white/10 rounded-full blur-3xl pointer-events-none z-20"
-                style={{ top: -100, left: -100 }}
-              />
-
-              <div className="scanline" />
 
               <div className="corner-bracket absolute top-4 right-4 z-20 h-12 w-12 border-t-2 border-r-2 border-brand-orange" style={{ transformOrigin: "top right" }} />
               <div className="corner-bracket absolute bottom-4 left-4 z-20 h-12 w-12 border-b-2 border-l-2 border-brand-orange" style={{ transformOrigin: "bottom left" }} />
