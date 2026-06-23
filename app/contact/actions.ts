@@ -108,47 +108,57 @@ export async function submitQuoteForm(
     </div>
   `;
 
- const resend = new Resend(process.env.RESEND_API_KEY);
-
-  /* ── 1. SEND TO SALES CRM (Randar OS) ── */
-  try {
-    // Map the UI machine type to your backend ENUM schema
-    let mappedMachineType = "MANUAL";
-    if (machineType === "Automatic") mappedMachineType = "AUTOMATIC";
-    if (machineType === "Semi Automatic") mappedMachineType = "SEMI_AUTOMATIC";
-
-    // Bundle the detailed form fields into the CRM payload
-    const crmPayload = {
-      client_name: `${name} (${company})`,
-      phone_number: phone,
-      job_material: materialType.join(", "),
-      job_dimension: `${materialSize.join(", ")} | W:${materialWidth || 0} H:${materialHeight || 0} L:${materialLength || 0}`,
-      machine_type: mappedMachineType,
-      quantity: parseInt(quantity) || 1
-    };
-
-    // IMPORTANT: Swap 127.0.0.1 for your live API URL in production
-    const crmResponse = await fetch("http://127.0.0.1:8000/api/inquiries", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(crmPayload),
-    });
-
-    if (!crmResponse.ok) {
-      console.error("CRM Sync Warning: Server returned", crmResponse.status);
-    }
-  } catch (crmError) {
-    // We catch this error so that if the CRM is temporarily down, 
-    // it doesn't break the form and the email still sends!
-    console.error("CRM Sync Error:", crmError);
+  /* ── Guard: catch missing env var before it becomes an opaque crash ── */
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("RESEND_API_KEY is not set in environment variables.");
+    return { status: "error", message: "Server configuration error. Please contact us directly at sales@acs.co.in" };
   }
 
-  /* ── 2. SEND VIA RESEND (Email Backup) ── */
+  const resend = new Resend(apiKey);
+
+  /* ── 1. SEND TO SALES CRM (Randar OS) ── */
+  // Only attempt CRM sync when a real API URL is configured (skipped on Vercel if not set)
+  const crmBaseUrl = process.env.CRM_API_URL;
+  if (crmBaseUrl) {
+    try {
+      let mappedMachineType = "MANUAL";
+      if (machineType === "Automatic") mappedMachineType = "AUTOMATIC";
+      if (machineType === "Semi Automatic") mappedMachineType = "SEMI_AUTOMATIC";
+
+      const crmPayload = {
+        client_name: `${name} (${company})`,
+        phone_number: phone,
+        job_material: materialType.join(", "),
+        job_dimension: `${materialSize.join(", ")} | W:${materialWidth || 0} H:${materialHeight || 0} L:${materialLength || 0}`,
+        machine_type: mappedMachineType,
+        quantity: parseInt(quantity) || 1,
+      };
+
+      const crmResponse = await fetch(`${crmBaseUrl}/api/inquiries`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(crmPayload),
+      });
+
+      if (!crmResponse.ok) {
+        console.error("CRM Sync Warning: Server returned", crmResponse.status);
+      }
+    } catch (crmError) {
+      // Non-fatal: if the CRM is down, the email backup still goes through
+      console.error("CRM Sync Error:", crmError);
+    }
+  } else {
+    console.warn("CRM_API_URL not set — skipping CRM sync. Set this env var to enable it.");
+  }
+
+  /* ── 2. SEND VIA RESEND (Email) ── */
+  // NOTE: onboarding@resend.dev only works when sending TO your own verified email.
+  // If acs.co.in domain is verified in Resend, switch `from` to: "ACS Quote Form <noreply@acs.co.in>"
+  // Until then, keep `to` as your verified personal email.
   try {
     await resend.emails.send({
-      from: "ACS Quote Form <onboarding@resend.dev>", // works without a custom domain
+      from: "ACS Quote Form <onboarding@resend.dev>",
       to: "atharva.mishra1857@gmail.com",
       replyTo: email,
       subject: `[ACS Enquiry] ${name} — ${company} | ${bandsawType}`,
