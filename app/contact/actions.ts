@@ -108,21 +108,56 @@ export async function submitQuoteForm(
     </div>
   `;
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+ const resend = new Resend(process.env.RESEND_API_KEY);
 
-  /* ── send via resend── */
+  /* ── 1. SEND TO SALES CRM (Randar OS) ── */
   try {
-  await resend.emails.send({
-    from: "ACS Quote Form <onboarding@resend.dev>", // works without a custom domain
-    to: "atharva.mishra1857@gmail.com",
-    replyTo: email,
-    subject: `[ACS Enquiry] ${name} — ${company} | ${bandsawType}`,
-    html,
-  });
+    // Map the UI machine type to your backend ENUM schema
+    let mappedMachineType = "MANUAL";
+    if (machineType === "Automatic") mappedMachineType = "AUTOMATIC";
+    if (machineType === "Semi Automatic") mappedMachineType = "SEMI_AUTOMATIC";
 
-  return { status: "success", message: "Your enquiry has been sent. Our engineering team will respond within 24 hours." };
-} catch (err) {
-  console.error("Mail send failed:", err);
-  return { status: "error", message: "Failed to send your enquiry. Please try again or contact us directly." };
-}
+    // Bundle the detailed form fields into the CRM payload
+    const crmPayload = {
+      client_name: `${name} (${company})`,
+      phone_number: phone,
+      job_material: materialType.join(", "),
+      job_dimension: `${materialSize.join(", ")} | W:${materialWidth || 0} H:${materialHeight || 0} L:${materialLength || 0}`,
+      machine_type: mappedMachineType,
+      quantity: parseInt(quantity) || 1
+    };
+
+    // IMPORTANT: Swap 127.0.0.1 for your live API URL in production
+    const crmResponse = await fetch("http://127.0.0.1:8000/api/inquiries", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(crmPayload),
+    });
+
+    if (!crmResponse.ok) {
+      console.error("CRM Sync Warning: Server returned", crmResponse.status);
+    }
+  } catch (crmError) {
+    // We catch this error so that if the CRM is temporarily down, 
+    // it doesn't break the form and the email still sends!
+    console.error("CRM Sync Error:", crmError);
+  }
+
+  /* ── 2. SEND VIA RESEND (Email Backup) ── */
+  try {
+    await resend.emails.send({
+      from: "ACS Quote Form <onboarding@resend.dev>", // works without a custom domain
+      to: "atharva.mishra1857@gmail.com",
+      replyTo: email,
+      subject: `[ACS Enquiry] ${name} — ${company} | ${bandsawType}`,
+      html,
+    });
+
+    return { status: "success", message: "Your enquiry has been sent. Our engineering team will respond within 24 hours." };
+  } catch (err) {
+    console.error("Mail send failed:", err);
+    return { status: "error", message: "Failed to send your enquiry. Please try again or contact us directly." };
+  }
 }
