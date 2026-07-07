@@ -425,8 +425,8 @@ export default function ContactPage() {
                 <div className="flex flex-col pt-0.5">
                   <h3 className="text-[11px] font-bold uppercase tracking-widest text-brand-orange mb-1.5">Headquarters</h3>
                   <p className="text-brand-dark font-medium text-sm md:text-base leading-snug">
-                    Koregaon Bhima<br />
-                    Pune, Maharashtra, India
+                    Survey No. 639, Opp. Kalyani Forge LTD. Koregaon Bhima, Tal.<br />
+                    Shirur, Pune 412216
                   </p>
                 </div>
               </div>

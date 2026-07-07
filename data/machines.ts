@@ -117,7 +117,7 @@ export const machinesDB = {
         id: "vc-manual",
         name: "Manual Toolroom Vertical Bandsaw",
         type: "Manual",
-        image: "/images/products/vertical_bandsaw.png",
+        image: "/images/products/vertical_bandsaw_edited3.png",
         features: [
           "Compact industrial footprint optimized for die-shop and toolroom requirements.",
           "Manual hand-feed workspace with balanced, smooth-glide material pushing attachments.",

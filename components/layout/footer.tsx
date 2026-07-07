@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { Reveal, motionEase } from "@/components/ui/motion";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
@@ -86,7 +86,6 @@ export default function Footer() {
                 ["/machines/vertical-column", "Vertical Column Bandsaws"],
                 ["/machines/double-column", "Double Column Bandsaws"],
                 ["/machines/circular-saw", "Circular Saw Bandsaws"],
-                ["/spare-parts", "Blades & Spare Parts"],
               ].map(([href, label]) => (
                 <li key={href}>
                   <Link
@@ -108,9 +107,9 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <span className="font-bold text-brand-orange">📍</span>
                 <span>
-                  Koregaon Bhima
+                  Survey No. 639, Opp. Kalyani Forge LTD. Koregaon Bhima, Tal. 
                   <br />
-                  Pune, Maharashtra, India
+                 Shirur, Pune 412216
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -142,6 +141,16 @@ export default function Footer() {
                   </a>
                 </span>
               </li>
+              <li className="flex items-center gap-3">
+                <span className="font-bold text-brand-orange">
+                  <a
+                    href="https://www.youtube.com/@ACS_Pvt_Ltd"
+                    target="__blank"
+                  >
+                    <FaYoutube />
+                  </a>
+                </span>
+              </li>
               </div>
             </ul>
           </div>
@@ -152,7 +161,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Accurate Cutting Systems (ACS).
             All rights reserved.
           </p>
-          <div className="flex gap-6">
+          {/* <div className="flex gap-6">
             {[
               ["/privacy", "Privacy Policy"],
               ["/terms", "Terms of Service"],
@@ -170,7 +179,7 @@ export default function Footer() {
                 </Link>
               </motion.div>
             ))}
-          </div>
+          </div> */}
         </Reveal>
       </div>
     </footer>

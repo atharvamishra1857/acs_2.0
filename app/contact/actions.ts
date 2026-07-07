@@ -159,7 +159,7 @@ export async function submitQuoteForm(
   try {
     await resend.emails.send({
       from: "ACS Quote Form <onboarding@resend.dev>",
-      to: "atharva.mishra1857@gmail.com",
+      to: "sales@acs.co.in",
       replyTo: email,
       subject: `[ACS Enquiry] ${name} — ${company} | ${bandsawType}`,
       html,
