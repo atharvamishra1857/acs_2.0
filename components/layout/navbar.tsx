@@ -7,6 +7,7 @@ import Image from "next/image";
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileMachinesOpen, setIsMobileMachinesOpen] = useState(false);
+  const [isMobileCompanyOpen, setIsMobileCompanyOpen] = useState(false);
 
   return (
     <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
@@ -112,16 +113,26 @@ export default function Navbar() {
 
         {/* ── DESKTOP RIGHT LINKS ── */}
         <div className="hidden md:flex flex-1 justify-start pl-10 lg:pl-16 gap-8 items-center">
-          <Link
-            href="/about"
-            className="text-sm font-bold uppercase tracking-widest text-brand-gray hover:text-brand-orange transition-colors"
-          >
-            About Us
-          </Link>
-          <Link
-            href="/contact"
-            className="px-6 py-2.5 bg-brand-dark text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-orange transition-colors rounded-sm shadow-md"
-          >
+          {/* Company Dropdown */}
+          <div className="relative group py-6">
+            <Link
+              href="/about"
+              className="text-sm font-bold uppercase tracking-widest text-brand-gray group-hover:text-brand-orange transition-colors flex items-center gap-1"
+            >
+              Company
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </Link>
+            <div className="absolute left-0 top-full w-48 bg-white border-t-4 border-brand-orange shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 rounded-b-sm">
+              <div className="flex flex-col">
+                <Link href="/about" className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark hover:bg-brand-light hover:text-brand-orange transition-colors border-b border-gray-100">About Us</Link>
+                <Link href="/clients" className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark hover:bg-brand-light hover:text-brand-orange transition-colors">Our Clients</Link>
+              </div>
+            </div>
+          </div>
+
+          <Link href="/contact" className="px-6 py-2.5 bg-brand-dark text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-orange transition-colors rounded-sm shadow-md">
             Get a Quote
           </Link>
         </div>
@@ -235,13 +246,21 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Link
-            href="/about"
-            className="px-8 py-5 border-b border-gray-100 text-sm font-bold uppercase tracking-widest text-brand-dark hover:bg-brand-light transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            About Us
-          </Link>
+          <div className="flex flex-col border-b border-gray-100">
+            <button
+              onClick={() => setIsMobileCompanyOpen(!isMobileCompanyOpen)}
+              className="px-8 py-5 flex justify-between items-center text-sm font-bold uppercase tracking-widest text-brand-dark hover:bg-brand-light transition-colors w-full text-left"
+            >
+              Company
+              <svg className={`w-5 h-5 transition-transform duration-300 ${isMobileCompanyOpen ? "rotate-180 text-brand-orange" : "text-gray-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div className={`flex flex-col bg-brand-light overflow-hidden transition-all duration-300 ease-in-out ${isMobileCompanyOpen ? "max-h-64" : "max-h-0"}`}>
+              <Link href="/about" className="px-12 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark hover:text-brand-orange border-b border-gray-200/50 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
+              <Link href="/clients" className="px-12 py-4 text-xs font-bold uppercase tracking-widest text-brand-dark hover:text-brand-orange transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Our Clients</Link>
+            </div>
+          </div>
 
           <div className="p-6 bg-brand-light">
             <Link

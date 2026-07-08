@@ -1,0 +1,23 @@
+export const clientData = [
+  { id: "mahindra", name: "Mahindra", logo: "/images/clients/mahindra.png", testimonial: "ACS bandsaws have significantly reduced our cutting times. Their durability in high-volume automotive manufacturing is unmatched." },
+  { id: "isgec", name: "ISGEC", logo: "/images/clients/isgec.png", testimonial: "The heavy-duty construction of ACS machines ensures absolute precision, even when processing massive forged blocks for heavy engineering." },
+  { id: "fabtech", name: "Fabtech", logo: "/images/clients/fabtech.png", testimonial: "Excellent reliability and minimal downtime. ACS is our go-to partner for structural fabrication cutting solutions." },
+  { id: "lnt", name: "Larsen & Toubro", logo: "/images/clients/lnt.png", testimonial: "A highly reliable partner for defense and infrastructure fabrication. The double column machines provide the absolute precision we need." },
+  { id: "nelcast", name: "Nelcast", logo: "/images/clients/nelcast.png", testimonial: "Superior blade life and cutting feed controls make ACS machines the most cost-effective solution for our casting operations." },
+  { id: "cat", name: "Caterpillar", logo: "/images/clients/cat.png", testimonial: "Engineered for unyielding performance. These machines easily handle the tough alloys required in earth-moving equipment manufacturing." },
+  { id: "thyssenkrupp", name: "Thyssenkrupp", logo: "/images/clients/thyssenkrupp.png", testimonial: "Their automated systems integrated perfectly into our workflow, drastically improving our steel processing throughput." },
+  { id: "royal-enfield", name: "Royal Enfield", logo: "/images/clients/royalenfield.png", testimonial: "Precision is key in automotive. ACS delivers clean, repeatable cuts that keep our production lines moving smoothly." },
+  { id: "jindal", name: "Jindal Steel & Power", logo: "/images/clients/jindal.png", testimonial: "Able to withstand the extreme conditions of a steel plant while maintaining millimeter accuracy. Highly recommended." },
+  { id: "cera", name: "CERA", logo: "/images/clients/cera.png", testimonial: "Exceptional service and robust machinery. They understood our unique operational requirements and delivered flawlessly." },
+  { id: "hyva", name: "HYVA", logo: "/images/clients/hyva.png", testimonial: "ACS provides heavy-duty solutions that perfectly complement our hydraulic cylinder manufacturing requirements." },
+  { id: "railways", name: "Indian Railways", logo: "/images/clients/railways.png", testimonial: "Trusted machinery for national infrastructure. The reliability of ACS automated saws helps keep critical projects on schedule." },
+  { id: "cummins", name: "Cummins", logo: "/images/clients/cummins.png", testimonial: "Outstanding cutting performance on high-tensile engine block materials. Their after-sales support is industry-leading." },
+  { id: "volkswagen", name: "Volkswagen", logo: "/images/clients/vw.png", testimonial: "German-level engineering quality manufactured in India. The precision and speed perfectly match our automotive standards." },
+  { id: "bosch", name: "Bosch", logo: "/images/clients/bosch.png", testimonial: "Continuous operation capabilities without overheating or losing tolerance. A vital asset to our manufacturing floor." },
+  { id: "bhel", name: "BHEL", logo: "/images/clients/bhel.png", testimonial: "ACS stands up to the rigorous demands of power sector manufacturing. Their heavy-duty saws are built to last." },
+  { id: "gipi", name: "GIPI", logo: "/images/clients/gipi.png", testimonial: "Seamless miter cutting capabilities have dramatically accelerated our pipe and tube fabrication processes." },
+  { id: "schaeffler", name: "Schaeffler", logo: "/images/clients/schaeffler.png", testimonial: "Unmatched precision for bearing and component manufacturing. The cut finish often eliminates the need for secondary facing." },
+  { id: "amns", name: "AM/NS India", logo: "/images/clients/amns.png", testimonial: "High-speed processing for solid steel profiles. The machines handle our toughest raw materials with ease." },
+  { id: "textron", name: "Textron", logo: "/images/clients/textron.png", testimonial: "Reliable, robust, and highly accurate. ACS is a standard-setter in industrial band sawing technology." },
+  { id: "benteler", name: "Benteler", logo: "/images/clients/benteler.png", testimonial: "Automated feed systems drastically reduced our manual labor requirements while increasing overall output." }
+];
