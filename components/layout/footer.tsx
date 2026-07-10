@@ -49,7 +49,7 @@ export default function Footer() {
             <div className="mb-6 flex flex-col items-start">
               <span className="mb-1 text-4xl font-black leading-none tracking-tighter text-brand-orange">
                 <Image
-                  src="/images/ACS_LOGO.png"
+                  src="/images/acs_logo_transparent.png"
                   alt="ACS"
                   width={100}
                   height={100}

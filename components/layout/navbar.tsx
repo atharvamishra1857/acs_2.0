@@ -85,7 +85,7 @@ export default function Navbar() {
             {/* Logo Container (Locked to exactly 144px by 64px) */}
             <div className="relative w-36 h-16 group-hover:scale-105 transition-transform duration-300">
               <Image
-                src="/images/ACS_LOGO.png"
+                src="/images/acs_logo_transparent.png"
                 alt="ACS Logo"
                 fill
                 className="object-contain"
