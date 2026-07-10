@@ -2,7 +2,8 @@ export const machinesDB = {
   "double-column": {
     title: "Double Column Bandsaws",
     subtitle: "Heavy Duty High Speed Bandsaw Machines",
-    description: "Designed for unyielding rigidity and maximum cutting rates. Our double-column architecture eliminates vibration and ensures absolute precision across all automation levels.",
+    description:
+      "Designed for unyielding rigidity and maximum cutting rates. Our double-column architecture eliminates vibration and ensures absolute precision across all automation levels.",
     products: [
       {
         id: "dc-auto",
@@ -13,15 +14,40 @@ export const machinesDB = {
           "High Efficiency Power Transmission through HELICAL GEARED MOTOR.",
           "Double Acting Hydraulic Cylinder for Main Vice and shuttle vice.",
           "State of art Hydraulic Blade Tensioning.",
-          "Hydro-Mechanical Sensor for sensing hard layers and controlling feed.",
+          "Hydro-Mechanical Sensor for sensing hard layers and controlling the feed within range.",
           "Infinitely Variable Feed Control Valve for setting the cutting rate.",
           "Rapid approach of saw frame to save idle time.",
-          "Auto indexing shuttle with stroke length of 450mm synchronized with auto cycle.",
+          "Friction type rotating cleaning wire brush.",
+          "Auto indexing shuttle with stroke length of 450mm and synchronized with auto cycle.",
           "Adjustable Dovetail type Heavy duty Movable Blade Guide.",
-          "Specially designed Fixed Blade guide with internal coolant flow.",
-          "Cycle sequencing through PLC with Length setting through Digital SIKO Meter.",
-          "Automatic Machine SWITCH OFF in case of Blade Breakage."
-        ]
+          "Specially designed Fixed Blade guide with internal coolant flow for better cooling and lubrication of Blade as well as improved life of Carbide Wear Plates.",
+          "Hydraulic Power Pack for easy maintenance.",
+          "Ergonomically designed Electrical Control panel.",
+          "Lubrication system by hand operated pump for main columns",
+          "Cycle sequencing through PLC.",
+          "Length setting through Digital SIKO Meter.",
+          "Rubber Bellows for Column Protection.",
+          "Automatic Machine SWITCH OFF, in case of Blade Breakage.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting thru SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
       },
       {
         id: "dc-semi",
@@ -29,7 +55,7 @@ export const machinesDB = {
         type: "Semi-Automatic",
         image: "/images/products/ACS machine.jpeg",
         features: [
-          "LMG Guided Double Column Construction.",
+          "LMG Guided Double Column Construction",
           "High Efficiency Power Transmission through HELICAL GEARED MOTOR.",
           "Double Acting Hydraulic Cylinder for Main Vice.",
           "State of art Hydraulic Blade Tensioning.",
@@ -37,9 +63,31 @@ export const machinesDB = {
           "Rapid approach of saw frame to save idle time.",
           "Friction type rotating cleaning wire brush.",
           "Adjustable Heavy duty Movable Blade Guide.",
-          "Lubrication system by hand operated pump for main columns.",
-          "Automatic Machine SWITCH OFF in case of Blade Breakage."
-        ]
+          "Specially designed Fixed Blade guide with internal coolant flow for better cooling and lubrication of Blade as well as improved life of Carbide Wear Plates.",
+          "Hydraulic Power Pack for easy maintenance.",
+          "Ergonomically designed Electrical Control panel.",
+          "Lubrication system by hand operated pump for main columns",
+          "Automatic Machine SWITCH OFF, in case of Blade Breakage.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting thru SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
       },
       {
         id: "dc-manual",
@@ -47,15 +95,36 @@ export const machinesDB = {
         type: "Manual",
         image: "/images/products/ACS machine.jpeg",
         features: [
-          "LMG Guided Double Column Construction.",
           "Manual Arrangement for clamping Main Vice.",
-          "Infinitely variable Feed Control Valve for Setting the Cutting Rate.",
-          "Adjustable Heavy-duty movable blade guide with tungsten carbide wear pads.",
+          "Infinitely variable Feed Control Valve for Setting the Cutting Rate",
+          "Adjustable Heavy-duty movable blade guide with tungsten carbide wear pads & guide rollers.",
+          "Automatic Machine OFF, in case of Blade Breakage.",
           "Manual arrangement for blade tensioning.",
-          "Gear motor with VFD to set the band speed through control panel.",
+          "Gear motor with VFD to set to set the band speed through control panel.",
+          "LMG Guided Double Column Construction.",
           "Ergonomically designed Electrical Control Panel.",
-          "Automatic Machine OFF in case of Blade Breakage."
-        ]
+          "Friction type rotating cleaning wire brush",
+          "Hydraulic Power Pack for easy maintenance.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting thru SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
       },
       {
         id: "dc-mitre",
@@ -63,22 +132,45 @@ export const machinesDB = {
         type: "Specialized",
         image: "/images/products/double_column_miter.png",
         features: [
-          "Specially Designed for MITRE (Degree Cutting): +45° to -60° positioning.",
-          "LMG Guided Double Column Construction guaranteeing vibration free operation.",
+          "LMG Guided Double Column Construction guaranteeing vibration free operation",
+          "Specially Designed for MITRE (Degree Cutting)",
           "Motorized/ Manual MITRE positioning.",
           "Efficient guiding of the band by tungsten carbide inserts and pre-straightening rollers.",
           "Hydraulic blade tension.",
+          "Friction type rotating wire brush / motorized wire brush.",
+          "Coolant arrangement with inbuilt tank.",
+          "Automatic Machine Switch Off in case of Blade Breakage.",
           "Automatic Job Height Adjustment.",
+          "+45 Degree to -60 Degree MITRE positioning.",
           "HMI to set cutting parameters through PLC.",
-          "Automatic Machine Switch Off in case of Blade Breakage."
-        ]
-      }
-    ]
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting through SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
+      },
+    ],
   },
   "vertical-column": {
     title: "Vertical Column Bandsaws",
     subtitle: "Precision Upright Cutting Solutions",
-    description: "Engineered for complex contours, plate slitting, and structural block trimming. The vertical design maximizes space and provides an optimal viewing angle for intricate toolroom and production work.",
+    description:
+      "Engineered for complex contours, plate slitting, and structural block trimming. The vertical design maximizes space and provides an optimal viewing angle for intricate toolroom and production work.",
     products: [
       {
         id: "vc-auto",
@@ -94,8 +186,27 @@ export const machinesDB = {
           "Carbide blade guide inserts with integrated high-pressure fluid lubrication slots.",
           "Laser line indicator for fast, accurate manual indexing validation.",
           "Powered chip conveyor system paired with automated flush hose assemblies.",
-          "Instantaneous automatic machine shut-off sensor triggered by blade breakage or slippage."
-        ]
+          "Instantaneous automatic machine shut-off sensor triggered by blade breakage or slippage.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting through SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
       },
       {
         id: "vc-semi",
@@ -110,8 +221,27 @@ export const machinesDB = {
           "Interchangeable hardened ground insert plates within the worktable assembly.",
           "Manual blade tensioning system coupled with a highly visible safety pressure gauge.",
           "Friction-driven rotary wire wheel brush for aggressive chip removal.",
-          "Built-in heavy-duty flood coolant circulation tank and pump system."
-        ]
+          "Built-in heavy-duty flood coolant circulation tank and pump system.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting through SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
       },
       {
         id: "vc-manual",
@@ -126,15 +256,35 @@ export const machinesDB = {
           "Adjustable height blade guide arm ensuring minimum exposed blade during operation.",
           "Tungsten carbide wear pads and dual-roller bearings for dependable blade stability.",
           "Removable heavy metal chip collection box underneath the primary workspace drive.",
-          "Low-voltage workstation working lamp for precise line-of-cut illumination."
-        ]
-      }
-    ]
+          "Low-voltage workstation working lamp for precise line-of-cut illumination.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting through SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
+      },
+    ],
   },
   "circular-saw": {
     title: "High-Speed Circular Saws",
     subtitle: "High-Efficiency Circular Cold Saws",
-    description: "The ultimate solution for rapid, burr-free linear cutting of pipes, tubes, bars, and solid structural solid steel profiles. Engineered with solid cast iron bases to maintain processing speed without sacrificing surface finish quality.",
+    description:
+      "The ultimate solution for rapid, burr-free linear cutting of pipes, tubes, bars, and solid structural solid steel profiles. Engineered with solid cast iron bases to maintain processing speed without sacrificing surface finish quality.",
     products: [
       {
         id: "cs-auto",
@@ -149,8 +299,27 @@ export const machinesDB = {
           "Pneumatic or hydraulic horizontal and vertical split clamping vices securing raw stock.",
           "Advanced HMI system allowing pre-programmed multi-length nested cutting routines.",
           "Controlled micro-mist blade lubrication system preventing component over-saturation.",
-          "Full enclosure sheet metal safety shielding guarding operator workspace entirely."
-        ]
+          "Full enclosure sheet metal safety shielding guarding operator workspace entirely.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting through SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
       },
       {
         id: "cs-semi",
@@ -164,8 +333,27 @@ export const machinesDB = {
           "Dual-sided self-centering material vice keeping bars stable across variable sizes.",
           "Adjustable positive hard-stops for controlling cutting depth and vertical cycle stroke return.",
           "High-capacity electric flood coolant pump delivering fluid straight to the blade edge.",
-          "Foot pedal actuation options minimizing physical operator interaction requirements."
-        ]
+          "Foot pedal actuation options minimizing physical operator interaction requirements.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting through SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
       },
       {
         id: "cs-manual",
@@ -179,9 +367,28 @@ export const machinesDB = {
           "High-precision HSS (High Speed Steel) saw blade integration optimized for general engineering profiles.",
           "Integrated material support arm extending out to prevent long-bar drop distortions.",
           "Sturdy steel floor pedestal storage stand housing coolant catch basins internally.",
-          "Spring-loaded counterbalanced head design minimizing physical pull force required."
-        ]
-      }
-    ]
-  }
+          "Spring-loaded counterbalanced head design minimizing physical pull force required.",
+        ],
+        standardAccessories: [
+          "Friction type rotating cleaning wire brush",
+          "Positive Manual Blade Tensioning",
+          "Hydraulic full stroke clamping",
+          "Step Pulley with V Belt",
+          "Coolant tank",
+          "Tungsten Carbide face guides with ball bearings",
+        ],
+        optionalAccessories: [
+          "Hydraulic bundle cutting attachment",
+          "Electrically Driven Swarf Conveyor",
+          "Lubrication system by hand operated pump for main columns",
+          "A.C. frequency control drive for infinite variation of band speed thru control panel",
+          "Powered wire brush unit",
+          "Blade Tension Meter for periodic checking of blade tension, optimizing tool life",
+          "Length setting through SIKO Meter & Lead screw arrangement",
+          "Micromist coolant arrangement",
+          "Roller support stand one meter long with vertical guide rolls",
+        ],
+      },
+    ],
+  },
 };

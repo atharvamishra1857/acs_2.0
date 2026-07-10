@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { machinesDB } from "@/data/machines";
 import MachineCategoryShowcase from "../../../components/sections/machine-category-showcase";
-
 export function generateStaticParams() {
   return [
     { category: "double-column" },
@@ -23,5 +22,7 @@ export default async function MachineCategoryPage({
     notFound();
   }
 
-  return <MachineCategoryShowcase categoryData={categoryData} />;
+  return (
+    <MachineCategoryShowcase categoryData={categoryData} />
+  );
 }

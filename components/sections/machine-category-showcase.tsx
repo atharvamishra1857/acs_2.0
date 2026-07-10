@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MagneticButton } from "@/components/ui/motion";
+import MachineTabs from "@/components/ui/MachineTabs";
 
 type CategoryData = {
   title: string;
@@ -17,6 +18,8 @@ type CategoryData = {
     type: string;
     image: string;
     features: string[];
+    standardAccessories: string[];
+    optionalAccessories: string[];
   }>;
 };
 
@@ -135,18 +138,12 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
                   <div className="draw-underline h-1 w-16 bg-brand-orange" style={{ clipPath: "inset(0% 0% 0% 0%)" }} />
                 </div>
 
-                <div className="mb-8 rounded-sm border border-brand-gray/50 bg-white p-6 shadow-sm">
-                  <h3 className="mb-4 border-b border-brand-gray/20 pb-2 text-xs font-bold uppercase tracking-widest text-brand-gray">
-                    Standard Features & Specifications
-                  </h3>
-                  <div className="grid grid-cols-1 gap-y-3 md:grid-cols-2 md:gap-x-6">
-                    {machine.features.map((feature) => (
-                      <div key={feature} className="flex items-start gap-3 text-sm font-medium text-brand-dark">
-                        <span className="mt-0.5 font-bold text-brand-orange">✓</span>
-                        <span className="leading-tight">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="mb-8">
+                  <MachineTabs 
+                    features={machine.features} 
+                    standardAccessories={machine.standardAccessories} 
+                    optionalAccessories={machine.optionalAccessories} 
+                  />
                 </div>
 
                 <div className="flex flex-col gap-4 sm:flex-row">
