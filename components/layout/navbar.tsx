@@ -72,9 +72,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ── CENTER BRAND ── */}
-        {/* ── CENTER BRAND ── */}
-        {/* ── CENTER BRAND ── */}
+        
         {/* ── CENTER BRAND ── */}
         <div className="flex flex-col items-center justify-center shrink-0 text-center mt-2">
           <Link

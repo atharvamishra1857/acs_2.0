@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useActionState } from "react";
+import React, { useEffect, useRef, useState, useActionState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { useFormStatus } from "react-dom";
 import gsap from "gsap";
@@ -69,10 +69,84 @@ function SubmitButton() {
 ───────────────────────────────────────────── */
 const initialState: FormState = { status: "idle", message: "" };
 
+/* Required fields used to compute live completion progress.
+   Checkbox/radio groups are checked via querySelectorAll since they
+   share a name across multiple inputs. */
+function computeProgress(form: HTMLFormElement | null): number {
+  if (!form) return 0;
+  const val = (name: string) =>
+    (form.elements.namedItem(name) as HTMLInputElement | RadioNodeList | null)?.value ?? "";
+  const checks = [
+    !!val("name"),
+    !!val("phone"),
+    !!val("email"),
+    !!val("company"),
+    !!val("bandsawType"),
+    !!val("quantity"),
+    form.querySelectorAll('input[name="machineType"]:checked').length > 0,
+    form.querySelectorAll('input[name="materialSize"]:checked').length > 0,
+    !!val("materialWidth"),
+    !!val("materialHeight"),
+    !!val("materialLength"),
+    form.querySelectorAll('input[name="materialType"]:checked').length > 0,
+    !!val("enquiryPurpose"),
+  ];
+  const done = checks.filter(Boolean).length;
+  return Math.round((done / checks.length) * 100);
+}
+
 export default function ContactPage() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const toastRef = useRef<HTMLDivElement>(null);
+  const submitBtnWrapRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
-  const [formState, formAction] = useActionState(submitQuoteForm, initialState);
+  const [formState, formAction, isPending] = useActionState(submitQuoteForm, initialState);
+  const [progress, setProgress] = useState(0);
+  const [groupErrors, setGroupErrors] = useState({ materialSize: false, materialType: false });
+  const [stickyBarVisible, setStickyBarVisible] = useState(false);
+
+  const refreshProgress = () => setProgress(computeProgress(formRef.current));
+
+  /* ── Show a persistent mobile submit bar once the user scrolls past the
+     hero, and hide it again once the real submit button is on screen —
+     so there's never a moment where the primary action isn't reachable. ── */
+  useEffect(() => {
+    const submitEl = submitBtnWrapRef.current;
+    if (!submitEl) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => setStickyBarVisible(!entry.isIntersecting && window.scrollY > 500),
+      { threshold: 0 }
+    );
+    io.observe(submitEl);
+
+    const onScroll = () => {
+      if (window.scrollY <= 500) setStickyBarVisible(false);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  /* ── On any submit outcome: move attention to the result. Screen readers
+     get it via role="alert" already; sighted users on a long form need the
+     scroll+focus or they'll never notice a toast rendered off-screen. ── */
+  useEffect(() => {
+    if (formState.status === "idle") return;
+
+    toastRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    toastRef.current?.focus();
+
+    if (formState.status === "success") {
+      formRef.current?.reset();
+      setGroupErrors({ materialSize: false, materialType: false });
+      setProgress(0);
+    }
+  }, [formState]);
 
   /* ── GSAP orchestration ── */
   useEffect(() => {
@@ -153,15 +227,23 @@ export default function ContactPage() {
     return () => ctx.revert();
   }, [reducedMotion]);
 
-  /* ── Client-side guard (checkbox groups aren't covered by HTML required) ── */
+  /* ── Client-side guard (checkbox groups aren't covered by HTML required).
+     Instead of blocking with alert(), we mark the offending group inline
+     and scroll straight to the first one — the user shouldn't have to
+     hunt for what's wrong. ── */
   const handleClientValidate = (e: React.FormEvent<HTMLFormElement>) => {
     const form = e.currentTarget;
-    const materialTypeChecked = form.querySelectorAll('input[name="materialType"]:checked').length > 0;
     const materialSizeChecked = form.querySelectorAll('input[name="materialSize"]:checked').length > 0;
+    const materialTypeChecked = form.querySelectorAll('input[name="materialType"]:checked').length > 0;
 
-    if (!materialTypeChecked || !materialSizeChecked) {
+    setGroupErrors({ materialSize: !materialSizeChecked, materialType: !materialTypeChecked });
+
+    if (!materialSizeChecked || !materialTypeChecked) {
       e.preventDefault();
-      alert("Please select at least one material shape and at least one material type.");
+      const firstBadGroup = form.querySelector(
+        `[data-group="${!materialSizeChecked ? "materialSize" : "materialType"}"]`
+      );
+      firstBadGroup?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
@@ -489,26 +571,35 @@ export default function ContactPage() {
 
               {/* Card header */}
               <div className="bg-brand-dark px-8 py-5 flex items-center justify-between">
-                <div>
+                <div className="flex-1 min-w-0">
                   <h2 className="text-lg font-extrabold text-white uppercase tracking-tight">
                     Machine Configuration
                   </h2>
-                  <p className="text-brand-orange text-[11px] font-mono tracking-widest mt-1 opacity-60">
-                    FILL ALL REQUIRED FIELDS
+                  <p className="text-brand-orange text-[11px] font-mono tracking-widest mt-1 opacity-70">
+                    {progress}% COMPLETE
                   </p>
                 </div>
                 {/* macOS-style dots — purely decorative */}
-                <div className="flex gap-2" aria-hidden="true">
+                <div className="flex gap-2 shrink-0 ml-4" aria-hidden="true">
                   {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
                     <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c, opacity: 0.5 }} />
                   ))}
                 </div>
+              </div>
+              {/* Live progress bar — gives concrete feedback on a long form instead of leaving the user guessing how much is left */}
+              <div className="h-1 bg-black/20" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-label="Form completion">
+                <div
+                  className="h-full bg-brand-orange transition-all duration-500 ease-out"
+                  style={{ width: `${progress}%` }}
+                />
               </div>
 
               <div className="p-8 md:p-10">
                 {/* ── Toast feedback ── */}
                 {formState.status !== "idle" && (
                   <motion.div
+                    ref={toastRef}
+                    tabIndex={-1}
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35 }}
@@ -534,7 +625,15 @@ export default function ContactPage() {
                   </motion.div>
                 )}
 
-                <form action={formAction} onSubmit={handleClientValidate} className="space-y-10">
+                <form
+                  ref={formRef}
+                  id="quote-form"
+                  action={formAction}
+                  onSubmit={handleClientValidate}
+                  onChange={refreshProgress}
+                  onInput={refreshProgress}
+                  className="space-y-10"
+                >
 
                   {/* ─ 01 Contact Details ─ */}
                   <fieldset className="form-fieldset space-y-5 border-0 p-0 m-0">
@@ -635,16 +734,35 @@ export default function ContactPage() {
 
                     <div className="field-wrap space-y-3">
                       <label className="field-label block text-[11px] font-bold uppercase tracking-widest text-brand-gray/60">
-                        Size / Shape of Material to Cut
+                        Size / Shape of Material to Cut <span className="text-brand-orange">*</span>
                       </label>
-                      <div className="flex flex-wrap gap-2">
+                      <div
+                        data-group="materialSize"
+                        className={`flex flex-wrap gap-2 p-1 -m-1 rounded-sm transition-shadow duration-300 ${
+                          groupErrors.materialSize ? "ring-2 ring-red-400 ring-offset-2" : ""
+                        }`}
+                      >
                         {["Round Bar / Pipe", "Square Bar / Pipe", "Casting", "Runner", "Riser"].map((s) => (
                           <label key={s}>
-                            <input type="checkbox" name="materialSize" value={s} className="tile-input" />
+                            <input
+                              type="checkbox"
+                              name="materialSize"
+                              value={s}
+                              className="tile-input"
+                              onChange={() => setGroupErrors((prev) => ({ ...prev, materialSize: false }))}
+                            />
                             <span className="tile-label">{s}</span>
                           </label>
                         ))}
                       </div>
+                      {groupErrors.materialSize && (
+                        <p className="text-xs font-semibold text-red-600 flex items-center gap-1.5">
+                          <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12A9 9 0 113 12a9 9 0 0118 0z" />
+                          </svg>
+                          Please select at least one shape.
+                        </p>
+                      )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -683,16 +801,35 @@ export default function ContactPage() {
 
                     <div className="field-wrap space-y-3">
                       <label className="field-label block text-[11px] font-bold uppercase tracking-widest text-brand-gray/60">
-                        Type of Material
+                        Type of Material <span className="text-brand-orange">*</span>
                       </label>
-                      <div className="flex flex-wrap gap-2">
+                      <div
+                        data-group="materialType"
+                        className={`flex flex-wrap gap-2 p-1 -m-1 rounded-sm transition-shadow duration-300 ${
+                          groupErrors.materialType ? "ring-2 ring-red-400 ring-offset-2" : ""
+                        }`}
+                      >
                         {["MS", "Steel", "Cast Iron", "Polymer", "Fiber", "Foam", "Rubber", "PVC", "Wood", "Ceramic", "Non Ferrous"].map((m) => (
                           <label key={m}>
-                            <input type="checkbox" name="materialType" value={m} className="tile-input" />
+                            <input
+                              type="checkbox"
+                              name="materialType"
+                              value={m}
+                              className="tile-input"
+                              onChange={() => setGroupErrors((prev) => ({ ...prev, materialType: false }))}
+                            />
                             <span className="tile-label">{m}</span>
                           </label>
                         ))}
                       </div>
+                      {groupErrors.materialType && (
+                        <p className="text-xs font-semibold text-red-600 flex items-center gap-1.5">
+                          <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12A9 9 0 113 12a9 9 0 0118 0z" />
+                          </svg>
+                          Please select at least one material type.
+                        </p>
+                      )}
                     </div>
                   </fieldset>
 
@@ -735,7 +872,9 @@ export default function ContactPage() {
                   </fieldset>
 
                   {/* ─ Submit ─ */}
-                  <SubmitButton />
+                  <div ref={submitBtnWrapRef}>
+                    <SubmitButton />
+                  </div>
                 </form>
               </div>
             </div>
@@ -743,6 +882,39 @@ export default function ContactPage() {
 
         </div>
       </section>
+
+      {/* ══════════════ MOBILE STICKY SUBMIT BAR ══════════════
+          On a long form, forcing users to scroll all the way back down
+          every time to submit is a real drop-off point. This surfaces the
+          primary action as soon as it scrolls off screen, and hides again
+          once the real button is visible so there's never a duplicate. */}
+      <div
+        className={`lg:hidden fixed bottom-0 inset-x-0 z-[90] bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-4 py-3 transition-transform duration-300 ${
+          stickyBarVisible ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="h-1 bg-gray-200 rounded-full overflow-hidden mb-1">
+              <div
+                className="h-full bg-brand-orange transition-all duration-500 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-brand-gray/70">
+              {progress}% complete
+            </p>
+          </div>
+          <button
+            type="submit"
+            form="quote-form"
+            disabled={isPending}
+            className="shrink-0 px-6 py-3 rounded-sm bg-brand-dark text-white text-xs font-bold uppercase tracking-widest disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] transition-all"
+          >
+            {isPending ? "Sending…" : "Send Enquiry"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
