@@ -1,8 +1,13 @@
 "use server";
 
 export type FormState = {
-  status: "idle" | "success" | "error";
+  status: "idle" | "success" | "error" | "ready";
   message: string;
+  emailPayload?: {
+    subject: string;
+    replyto: string;
+    html: string;
+  };
 };
 
 export async function submitQuoteForm(
@@ -107,12 +112,6 @@ export async function submitQuoteForm(
   `;
 
   /* ── Guard: catch missing env var before it becomes an opaque crash ── */
-  const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
-  if (!accessKey) {
-    console.error("WEB3FORMS_ACCESS_KEY is not set in environment variables.");
-    return { status: "error", message: "Server configuration error. Please contact us directly at sales@acs.co.in" };
-  }
-
   /* ── 1. SEND TO SALES CRM (Randar OS) ── */
   // Only attempt CRM sync when a real API URL is configured (skipped on Vercel if not set)
   const crmBaseUrl = process.env.CRM_API_URL;
@@ -148,67 +147,21 @@ export async function submitQuoteForm(
     console.warn("CRM_API_URL not set — skipping CRM sync. Set this env var to enable it.");
   }
 
-  /* ── 2. SEND VIA WEB3FORMS (Email) ──
-     Web3Forms accepts a plain JSON POST — no SDK, no domain verification
-     needed on their side. We keep your existing branded HTML template as
-     the message body and let Web3Forms handle delivery + spam filtering. */
-  try {
-    const web3formsRes = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        // Node's default fetch sends a bare/missing User-Agent, which Cloudflare
-        // (sitting in front of api.web3forms.com) can flag as bot traffic and
-        // respond with a "Just a moment..." challenge page instead of the API.
-        // A normal browser-like UA avoids that.
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-      },
-      body: JSON.stringify({
-        access_key: accessKey,
-        subject: `[ACS Enquiry] ${name} — ${company} | ${bandsawType}`,
-        from_name: "ACS Quote Form",
-        replyto: email,
-        // Web3Forms renders this as the email body when `html` styling isn't parsed by
-        // their default template — we pass our own full HTML via the "message" field.
-        message: html,
-      }),
-    });
-
-    // TEMP (testing): read as text first — if Web3Forms (or something in between,
-    // like a proxy/firewall) returns an HTML error page instead of JSON, .json()
-    // would crash with an unhelpful "Unexpected token '<'" error. This way we log
-    // the actual raw response so we can see what really came back.
-    const rawBody = await web3formsRes.text();
-    let web3formsData: { success?: boolean; message?: string };
-    try {
-      web3formsData = JSON.parse(rawBody);
-    } catch {
-      console.error("Web3Forms returned a non-JSON response:", {
-        status: web3formsRes.status,
-        statusText: web3formsRes.statusText,
-        bodyPreview: rawBody.slice(0, 300),
-      });
-      throw new Error(
-        `Web3Forms request failed (status ${web3formsRes.status}). The response wasn't JSON — likely a network/DNS/firewall issue reaching api.web3forms.com, not a form rejection.`
-      );
-    }
-
-    if (!web3formsRes.ok || !web3formsData.success) {
-      // TEMP (testing): logs the actual reason Web3Forms rejected the request —
-      // e.g. invalid access key, unverified key, or bad payload. Check your
-      // server/terminal logs (or Vercel function logs) after a failed submit.
-      console.error("Web3Forms rejected submission:", {
-        status: web3formsRes.status,
-        response: web3formsData,
-      });
-      throw new Error(web3formsData.message || "Web3Forms rejected the submission.");
-    }
-
-    return { status: "success", message: "Your enquiry has been sent. Our engineering team will respond within 24 hours." };
-  } catch (err) {
-    console.error("Mail send failed:", err);
-    return { status: "error", message: "Failed to send your enquiry. Please try again or contact us directly." };
-  }
+  /* ── 2. HAND OFF TO CLIENT FOR EMAIL DELIVERY ──
+     Web3Forms sits behind Cloudflare, which challenges/blocks server-to-server
+     requests (Node's fetch has a TLS fingerprint Cloudflare treats as bot
+     traffic, regardless of headers/IP — confirmed happening identically on
+     Vercel's IPs, not just local). Web3Forms' access key is designed to be
+     public/client-safe for exactly this reason, so we validate + sync the CRM
+     here on the server, then hand the composed email back to the browser to
+     actually deliver it — a real browser's TLS fingerprint isn't challenged. */
+  return {
+    status: "ready",
+    message: "",
+    emailPayload: {
+      subject: `[ACS Enquiry] ${name} — ${company} | ${bandsawType}`,
+      replyto: email,
+      html,
+    },
+  };
 }

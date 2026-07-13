@@ -10,8 +10,9 @@ import { submitQuoteForm, type FormState } from "./actions";
 /* ─────────────────────────────────────────────
    Submit button — reads pending state via hook
 ───────────────────────────────────────────── */
-function SubmitButton() {
-  const { pending } = useFormStatus();
+function SubmitButton({ extraPending = false }: { extraPending?: boolean }) {
+  const { pending: formPending } = useFormStatus();
+  const pending = formPending || extraPending;
 
   return (
     <button
@@ -105,6 +106,13 @@ export default function ContactPage() {
   const [progress, setProgress] = useState(0);
   const [groupErrors, setGroupErrors] = useState({ materialSize: false, materialType: false });
   const [stickyBarVisible, setStickyBarVisible] = useState(false);
+  // What's actually shown in the toast. Mirrors formState for idle/success/error,
+  // but for "ready" we intercept — the server validated + synced the CRM, and
+  // handed the composed email back for the browser to deliver directly (Web3Forms
+  // sits behind Cloudflare, which blocks server-to-server requests but not
+  // real browser requests — see emailPayload handoff in actions.ts).
+  const [displayState, setDisplayState] = useState<FormState>(initialState);
+  const [emailSending, setEmailSending] = useState(false);
 
   const refreshProgress = () => setProgress(computeProgress(formRef.current));
 
@@ -132,21 +140,68 @@ export default function ContactPage() {
     };
   }, []);
 
-  /* ── On any submit outcome: move attention to the result. Screen readers
+  /* ── React to the server action's result ── */
+  useEffect(() => {
+    if (formState.status === "idle") return;
+
+    if (formState.status === "error") {
+      setDisplayState(formState);
+      return;
+    }
+
+    if (formState.status === "ready" && formState.emailPayload) {
+      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+      if (!accessKey) {
+        console.error("NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY is not set — cannot send from the browser.");
+        setDisplayState({ status: "error", message: "Server configuration error. Please contact us directly at sales@acs.co.in" });
+        return;
+      }
+
+      setEmailSending(true);
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: formState.emailPayload.subject,
+          from_name: "ACS Quote Form",
+          replyto: formState.emailPayload.replyto,
+          message: formState.emailPayload.html,
+        }),
+      })
+        .then(async (res) => {
+          const data = await res.json().catch(() => null);
+          if (!res.ok || !data?.success) {
+            console.error("Web3Forms rejected submission:", { status: res.status, data });
+            setDisplayState({ status: "error", message: "Failed to send your enquiry. Please try again or contact us directly." });
+            return;
+          }
+          setDisplayState({ status: "success", message: "Your enquiry has been sent. Our engineering team will respond within 24 hours." });
+        })
+        .catch((err) => {
+          console.error("Web3Forms submission failed:", err);
+          setDisplayState({ status: "error", message: "Failed to send your enquiry. Please try again or contact us directly." });
+        })
+        .finally(() => setEmailSending(false));
+    }
+  }, [formState]);
+
+  /* ── On any final outcome: move attention to the result. Screen readers
      get it via role="alert" already; sighted users on a long form need the
      scroll+focus or they'll never notice a toast rendered off-screen. ── */
   useEffect(() => {
-    if (formState.status === "idle") return;
+    if (displayState.status === "idle") return;
 
     toastRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     toastRef.current?.focus();
 
-    if (formState.status === "success") {
+    if (displayState.status === "success") {
       formRef.current?.reset();
       setGroupErrors({ materialSize: false, materialType: false });
       setProgress(0);
     }
-  }, [formState]);
+  }, [displayState]);
+
 
   /* ── GSAP orchestration ── */
   useEffect(() => {
@@ -596,14 +651,14 @@ export default function ContactPage() {
 
               <div className="p-8 md:p-10">
                 {/* ── Toast feedback ── */}
-                {formState.status !== "idle" && (
+                {displayState.status !== "idle" && (
                   <motion.div
                     ref={toastRef}
                     tabIndex={-1}
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35 }}
-                    className={`form-toast ${formState.status === "success" ? "form-toast--success" : "form-toast--error"}`}
+                    className={`form-toast ${displayState.status === "success" ? "form-toast--success" : "form-toast--error"}`}
                     role="alert"
                   >
                     <svg
@@ -615,14 +670,19 @@ export default function ContactPage() {
                       strokeWidth="2.2"
                       viewBox="0 0 24 24"
                     >
-                      {formState.status === "success" ? (
+                      {displayState.status === "success" ? (
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       ) : (
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12A9 9 0 113 12a9 9 0 0118 0z" />
                       )}
                     </svg>
-                    {formState.message}
+                    {displayState.message}
                   </motion.div>
+                )}
+                {emailSending && (
+                  <div className="form-toast" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.08)", color: "#555" }} role="status">
+                    Sending your enquiry…
+                  </div>
                 )}
 
                 <form
@@ -873,7 +933,7 @@ export default function ContactPage() {
 
                   {/* ─ Submit ─ */}
                   <div ref={submitBtnWrapRef}>
-                    <SubmitButton />
+                    <SubmitButton extraPending={emailSending} />
                   </div>
                 </form>
               </div>
@@ -908,10 +968,10 @@ export default function ContactPage() {
           <button
             type="submit"
             form="quote-form"
-            disabled={isPending}
+            disabled={isPending || emailSending}
             className="shrink-0 px-6 py-3 rounded-sm bg-brand-dark text-white text-xs font-bold uppercase tracking-widest disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] transition-all"
           >
-            {isPending ? "Sending…" : "Send Enquiry"}
+            {isPending || emailSending ? "Sending…" : "Send Enquiry"}
           </button>
         </div>
       </div>
