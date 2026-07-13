@@ -166,7 +166,11 @@ export default function ContactPage() {
           subject: formState.emailPayload.subject,
           from_name: "ACS Quote Form",
           replyto: formState.emailPayload.replyto,
-          message: formState.emailPayload.html,
+          // Individual fields, not a raw HTML blob — Web3Forms' free-tier template
+          // doesn't render custom HTML, and a wall of literal markup tags in the
+          // email body is a strong spam-filter trigger. This lets Web3Forms build
+          // its own clean, properly rendered field table instead.
+          ...formState.emailPayload.fields,
         }),
       })
         .then(async (res) => {
