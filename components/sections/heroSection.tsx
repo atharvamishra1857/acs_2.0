@@ -122,7 +122,7 @@ export default function HeroSection() {
           {/* CTA Buttons */}
           <div className="hero-fade-up mt-10 flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
             <MagneticButton
-              href="/machines"
+              href="/machines/double-column"
               className="inline-flex justify-center rounded-sm border border-brand-orange bg-brand-orange px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition-all duration-300 hover:bg-orange-600 hover:shadow-[0_0_20px_rgba(255,90,0,0.4)]"
             >
               Explore Solutions
@@ -161,7 +161,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-linear-to-br from-brand-orange/12 via-transparent to-transparent z-10 pointer-events-none" />
               
               <Image
-                src="/images/products/ACS machine.jpeg"
+                src="/images/products/acs_home.png"
                 alt="ACS High-Performance Band Saw Machine"
                 fill
                 priority

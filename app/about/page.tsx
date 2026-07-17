@@ -391,14 +391,15 @@ export default function AboutPage() {
       {/* ══════════ 2. STATS STRIP ══════════ */}
       <section className="stats-section bg-brand-dark border-b border-brand-gray shadow-2xl relative z-20">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-12">
-            <StatBox
+          {/* Changed lg:grid-cols-4 to max-w-4xl mx-auto to center the 2 items */}
+          <div className="grid grid-cols-1 md:grid-cols-2 py-12 max-w-4xl mx-auto w-full">
+            {/* <StatBox
               className="stat-box"
               title="Certifications"
               endValue={5}
               suffix="+"
               description="To further reiterate our high Standards & Quality"
-            />
+            /> */}
             <StatBox
               className="stat-box"
               title="Project Success"
@@ -406,17 +407,17 @@ export default function AboutPage() {
               suffix="%"
               description="Ensuring timely project completion & client satisfaction"
             />
-            <StatBox
+            {/* <StatBox
               className="stat-box"
               title="Employees"
               endValue={15}
               suffix="+"
               description="Qualified and skilled resources ensuring smooth operations"
-            />
+            /> */}
             <StatBox
               className="stat-box"
               title="Global Clients"
-              endValue={100}
+              endValue={1000}
               suffix="+"
               description="Reaching a wider audience with excellent after-sales"
             />
@@ -563,7 +564,7 @@ export default function AboutPage() {
 
         <div className="team-element relative max-w-4xl mx-auto mb-8 md:mb-12">
           <div className="absolute -top-3 -left-3 w-full h-full bg-brand-orange/10 rounded-sm pointer-events-none" />
-          <div className="relative overflow-hidden rounded-sm shadow-2xl border border-gray-200 group">
+          {/* <div className="relative overflow-hidden rounded-sm shadow-2xl border border-gray-200 group">
             <Image
               src="/images/acs-core-team.png"
               alt="Team ACS"
@@ -571,7 +572,7 @@ export default function AboutPage() {
               height={700}
               className="w-full h-auto object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="relative max-w-4xl mx-auto px-6">

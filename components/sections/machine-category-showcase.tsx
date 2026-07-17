@@ -110,9 +110,6 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
                 <div
                   className="group relative overflow-hidden rounded-sm border border-brand-gray/50 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5"
                 >
-                  <div className="absolute left-4 top-4 z-20 rounded-sm bg-brand-dark px-4 py-2 text-xs font-bold uppercase tracking-widest text-white shadow-md">
-                    {machine.type}
-                  </div>
                   <div className="relative aspect-4/3 w-full lg:aspect-auto lg:h-[420px]">
                     <Image
                       src={machine.image}
@@ -146,24 +143,24 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
                   />
                 </div>
 
-                <div className="flex flex-col gap-4 sm:flex-row">
+                <div className="item-center">
                   <MagneticButton
                     href="/contact"
                     className="inline-flex justify-center rounded-sm bg-brand-dark px-8 py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_12px_25px_rgba(0,0,0,0.12)] transition-colors duration-300 hover:bg-brand-orange"
                   >
                     Request Quote
                   </MagneticButton>
-                  <MagneticButton
+                  {/* <MagneticButton
                     className="inline-flex justify-center rounded-sm border-2 border-brand-dark px-8 py-4 text-sm font-bold uppercase tracking-widest text-brand-dark transition-colors duration-300 hover:bg-brand-dark hover:text-white"
                     onClick={() => window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" })}
                   >
-                    <span className="flex items-center gap-2">
+                    {/* <span className="flex items-center gap-2">
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
                       Download Brochure
-                    </span>
-                  </MagneticButton>
+                    </span> */}
+                  {/* </MagneticButton>  */}
                 </div>
               </div>
             </div>

@@ -93,7 +93,7 @@ export default function Navbar() {
             </div>
             
             <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-brand-dark mt-1 hidden sm:block">
-              Accurate Cutting Systems
+              Accurate Cutting Systems Pvt Ltd
             </span>
             
             {/* Tagline Container (Responsive sizes locked via the parent div) */}

@@ -9,7 +9,7 @@ export const machinesDB = {
         id: "dc-auto",
         name: "Fully Automatic Double Column Bandsaw",
         type: "Automatic",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/acs_home.png",
         features: [
           "High Efficiency Power Transmission through HELICAL GEARED MOTOR.",
           "Double Acting Hydraulic Cylinder for Main Vice and shuttle vice.",
@@ -53,7 +53,7 @@ export const machinesDB = {
         id: "dc-semi",
         name: "Semi Automatic Double Column Bandsaw",
         type: "Semi-Automatic",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/acs_home.png",
         features: [
           "LMG Guided Double Column Construction",
           "High Efficiency Power Transmission through HELICAL GEARED MOTOR.",
@@ -93,7 +93,7 @@ export const machinesDB = {
         id: "dc-manual",
         name: "Manual Double Column Bandsaw",
         type: "Manual",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/acs_home.png",
         features: [
           "Manual Arrangement for clamping Main Vice.",
           "Infinitely variable Feed Control Valve for Setting the Cutting Rate",
@@ -176,7 +176,7 @@ export const machinesDB = {
         id: "vc-auto",
         name: "Fully Automatic Vertical Bandsaw",
         type: "Automatic",
-        image: "/images/products/vertical_bandsaw.png",
+        image: "/images/products/vertical_bandsaw_edited3.png",
         features: [
           "Heavy duty plate welded structural frame minimizing deflection under load.",
           "Automatic hydraulic table feed synchronized with material indexing systems.",
@@ -212,7 +212,7 @@ export const machinesDB = {
         id: "vc-semi",
         name: "Semi Automatic Vertical Bandsaw",
         type: "Semi-Automatic",
-        image: "/images/products/vertical_bandsaw.png",
+        image: "/images/products/vertical_bandsaw_edited3.png",
         features: [
           "Rigid upright column construction ensuring perfect structural alignment.",
           "Hydraulically operated stroke feed table with precision flow control valve adjustment.",
@@ -290,7 +290,7 @@ export const machinesDB = {
         id: "cs-auto",
         name: "Fully Automatic CNC Circular Cold Saw",
         type: "Automatic",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/circular_saw2.png",
         features: [
           "Ultra-fast processing cycle designed specifically for TCT (Tungsten Carbide Tipped) blades.",
           "Servo-motor driven ball screw material indexing mechanism ensuring ±0.1mm linear repeatability.",
@@ -325,7 +325,7 @@ export const machinesDB = {
         id: "cs-semi",
         name: "Semi Automatic Pneumatic Circular Saw",
         type: "Semi-Automatic",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/circular_saw2.png",
         features: [
           "Pneumatic toggle mechanism activating raw material clamping and saw-head downward feed.",
           "High-strength cast-iron saw head assembly mounted on a dual-pillar guidance track.",
@@ -359,7 +359,7 @@ export const machinesDB = {
         id: "cs-manual",
         name: "Manual Pivot Industrial Circular Saw",
         type: "Manual",
-        image: "/images/products/ACS machine.jpeg",
+        image: "/images/products/circular_saw2.png",
         features: [
           "Manual downward pull lever with integrated low-voltage on/off deadman trigger switch.",
           "Movable miter head swiveling up to 45 degrees left or right for quick angular cuts.",
