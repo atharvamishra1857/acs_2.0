@@ -72,7 +72,7 @@ export default function Footer() {
               {/* ── THE MONOCHROME TAGLINE IMAGE ── */}
               <div className="mt-6">
                 <Image
-                  src="/images/acs_tagline-removebg.png"
+                  src="/images/acs_tagline.png"
                   alt="The Perfect Cut... Always"
                   width={180}
                   height={28}
