@@ -5,9 +5,9 @@ import StorySection from "./Storysection";
 export default function Home() {
   // We provide 4 images to perfectly match the 4 text sections below.
   const storyImages = [
-    { src: "/images/products/ACS machine.jpeg", alt: "ACS Fully Automatic Double Column Bandsaw" },
+    { src: "/images/products/acs_machine.jpeg", alt: "ACS Fully Automatic Double Column Bandsaw" },
     { src: "/images/products/vertical_bandsaw.png", alt: "ACS Vertical Column Bandsaw" },
-    { src: "/images/products/ACS machine.jpeg", alt: "ACS Heavy Duty Construction" }, // Re-using for the "Uptime" section
+    { src: "/images/products/acs_machine.jpeg", alt: "ACS Heavy Duty Construction" }, // Re-using for the "Uptime" section
     { src: "/images/products/double_column_miter.png", alt: "ACS Double Column Miter Bandsaw" },
   ];
 

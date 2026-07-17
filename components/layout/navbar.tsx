@@ -99,7 +99,7 @@ export default function Navbar() {
             {/* Tagline Container (Responsive sizes locked via the parent div) */}
             <div className="relative mt-1.5 w-40 h-6 sm:w-[200px] sm:h-8">
               <Image
-                src="/images/ACS_tagline-removebg.png"
+                src="/images/acs_tagline-removebg.png"
                 alt="The Perfect Cut... Always"
                 fill
                 className="object-contain"
