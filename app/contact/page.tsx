@@ -615,6 +615,41 @@ export default function ContactPage() {
                 ))}
               </ul>
             </div>
+            {/* Map */}
+            <div className="mt-6 rounded-sm overflow-hidden border border-white/10 shadow-lg">
+              <iframe
+                title="ACS Workshop Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.123!2d74.2!3d18.67!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2e8b1a5b3b3b3%3A0x1!2sAccurate+Cutting+Systems+Pvt.+Ltd.%2C+Survey+No.+639%2C+Opp.+Kalyani+Forge+Ltd%2C+Koregaon+Bhima%2C+Pune+412216!5e0!3m2!1sen!2sin!4v1690000000000"
+                width="100%"
+                height="220"
+                style={{ border: 0, display: "block" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <a
+                href="https://maps.google.com/?q=Accurate+Cutting+Systems+Pvt+Ltd+Koregaon+Bhima+Pune+412216"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between bg-brand-dark px-4 py-3 group"
+              >
+                <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-white transition-colors">
+                  Get Directions
+                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-3.5 h-3.5 text-brand-orange group-hover:translate-x-1 transition-transform"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
 
           {/* ── RIGHT: Form ── */}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, useReducedMotion } from "motion/react";
+import ContactLocationSection from "@/components/ContactLocationSection";
 
 // ─── StatBox with GSAP ────────────────────────────────────────────────────────
 const StatBox = ({
@@ -607,49 +608,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ══════════ 6. CONTACT STRIP ══════════ */}
-      {/* 6. Quick Contact Strip */}
-      <section className="bg-brand-dark text-white py-16 border-t border-brand-gray">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 divide-y md:divide-y-0 md:divide-x divide-brand-gray/50">
-            {/* Phone Block */}
-            <div className="flex flex-col items-center text-center pt-8 md:pt-0 first:pt-0">
-              <span className="text-4xl block mb-5">📞</span>
-              <h4 className="font-bold uppercase tracking-widest text-sm text-brand-orange mb-3">
-                Give us a call
-              </h4>
-              <p className="text-lg font-medium text-gray-200">
-                +91 20 26872522
-              </p>
-              <p className="text-lg font-medium text-gray-200">
-                +91 9422308363
-              </p>
-            </div>
-
-            {/* Email Block */}
-            <div className="flex flex-col items-center text-center pt-10 md:pt-0">
-              <span className="text-4xl block mb-5">✉️</span>
-              <h4 className="font-bold uppercase tracking-widest text-sm text-brand-orange mb-3">
-                Email Us
-              </h4>
-              <p className="text-lg font-medium text-gray-200 hover:text-brand-orange transition-colors">
-                <a href="mailto:sales@acs.co.in">sales@acs.co.in</a>
-              </p>
-            </div>
-
-            {/* Address Block */}
-            <div className="flex flex-col items-center text-center pt-10 md:pt-0">
-              <span className="text-4xl block mb-5">📍</span>
-              <h4 className="font-bold uppercase tracking-widest text-sm text-brand-orange mb-3">
-                Workshop
-              </h4>
-              <p className="text-base font-medium text-gray-300 max-w-[280px] leading-relaxed">
-                Koregoan Bhima, Pune, Maharashtra
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ══════════ 6. CONTACT STRIP + MAP ══════════ */}
+      <ContactLocationSection
+        address="Accurate Cutting Systems Pvt. Ltd., Koregaon Bhima, Pune, Maharashtra 412216"
+        phones={["+91 9422308363"]}
+        email="sales@acs.co.in"
+        mapsUrl="https://maps.google.com/?q=Accurate+Cutting+Systems+Pvt+Ltd+Koregaon+Bhima+Pune"
+      />
     </div>
   );
 }
