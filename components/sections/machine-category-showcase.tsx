@@ -1,7 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -23,7 +28,11 @@ type CategoryData = {
   }>;
 };
 
-export default function MachineCategoryShowcase({ categoryData }: { categoryData: CategoryData }) {
+export default function MachineCategoryShowcase({
+  categoryData,
+}: {
+  categoryData: CategoryData;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
@@ -41,7 +50,7 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
         opacity: 0,
         duration: 0.8,
         stagger: 0.15,
-        ease: "power4.out"
+        ease: "power4.out",
       });
 
       // Product Cards Stagger Reveal
@@ -54,7 +63,7 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
           y: 50,
           opacity: 0,
           duration: 0.8,
-          ease: "power4.out"
+          ease: "power4.out",
         });
       });
 
@@ -67,25 +76,25 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
           },
           clipPath: "inset(0% 100% 0% 0%)",
           duration: 0.7,
-          ease: "power4.out"
+          ease: "power4.out",
         });
       });
-
     }, containerRef);
 
     return () => ctx.revert();
   }, [reducedMotion]);
 
   return (
-    <div ref={containerRef} className="flex min-h-screen flex-col bg-brand-light">
+    <div
+      ref={containerRef}
+      className="flex min-h-screen flex-col bg-brand-light"
+    >
       <section className="relative overflow-hidden border-b-4 border-brand-orange bg-brand-dark py-24 text-center">
         <motion.div
           className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-size-[4rem_4rem]"
           style={reducedMotion ? undefined : { opacity: headerGlow }}
         />
-        <motion.div
-          className="absolute inset-x-0 top-0 h-56 bg-linear-to-b from-brand-orange/10 via-transparent to-transparent"
-        />
+        <motion.div className="absolute inset-x-0 top-0 h-56 bg-linear-to-b from-brand-orange/10 via-transparent to-transparent" />
         <div className="relative z-10 mx-auto max-w-4xl px-6">
           <span className="header-reveal mb-4 block text-sm font-bold uppercase tracking-widest text-brand-orange">
             {categoryData.subtitle}
@@ -107,10 +116,8 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
               className={`machine-card grid items-center gap-12 lg:grid-cols-12 lg:gap-16 ${index % 2 !== 0 ? "lg:[direction:rtl]" : ""}`}
             >
               <div className="lg:col-span-5 lg:[direction:ltr]">
-                <div
-                  className="group relative overflow-hidden rounded-sm border border-brand-gray/50 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5"
-                >
-                  <div className="relative aspect-4/3 w-full lg:aspect-auto lg:h-[420px]">
+                <div className="group relative overflow-hidden rounded-sm border border-brand-gray/50 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5">
+                  {/* <div className="relative aspect-4/3 w-full lg:aspect-auto lg:h-[420px]">
                     <Image
                       src={machine.image}
                       alt={machine.name}
@@ -119,9 +126,19 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
                       sizes="(max-width: 1024px) 100vw, 42vw"
                       priority={index === 0}
                     />
+                  </div> */}
+                  <div className="relative w-full aspect-[4/3] lg:aspect-auto lg:h-[420px] bg-gray-100">
+                    <Image
+                      src={machine.image}
+                      alt={machine.name}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                      sizes="(max-width: 1024px) 100vw, 42vw"
+                      priority={index === 0}
+                    />
                   </div>
                   <div className="absolute inset-0 bg-linear-to-t from-brand-dark/35 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
-                  
+
                   {/* Wipe in orange border */}
                   <div className="absolute bottom-0 left-0 h-1.5 bg-brand-orange w-full origin-left scale-x-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 z-30" />
                 </div>
@@ -132,14 +149,17 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
                   <h2 className="text-3xl font-black uppercase tracking-tight text-brand-dark mb-3">
                     {machine.name}
                   </h2>
-                  <div className="draw-underline h-1 w-16 bg-brand-orange" style={{ clipPath: "inset(0% 0% 0% 0%)" }} />
+                  <div
+                    className="draw-underline h-1 w-16 bg-brand-orange"
+                    style={{ clipPath: "inset(0% 0% 0% 0%)" }}
+                  />
                 </div>
 
                 <div className="mb-8">
-                  <MachineTabs 
-                    features={machine.features} 
-                    standardAccessories={machine.standardAccessories} 
-                    optionalAccessories={machine.optionalAccessories} 
+                  <MachineTabs
+                    features={machine.features}
+                    standardAccessories={machine.standardAccessories}
+                    optionalAccessories={machine.optionalAccessories}
                   />
                 </div>
 
@@ -167,8 +187,13 @@ export default function MachineCategoryShowcase({ categoryData }: { categoryData
           ))
         ) : (
           <div className="rounded-sm border border-brand-gray/50 bg-white py-24 text-center">
-            <h3 className="text-2xl font-bold uppercase tracking-widest text-brand-dark/60">Specifications Upcoming</h3>
-            <p className="mt-2 text-brand-gray">The engineering team is currently updating the catalog for {categoryData.title}.</p>
+            <h3 className="text-2xl font-bold uppercase tracking-widest text-brand-dark/60">
+              Specifications Upcoming
+            </h3>
+            <p className="mt-2 text-brand-gray">
+              The engineering team is currently updating the catalog for{" "}
+              {categoryData.title}.
+            </p>
           </div>
         )}
       </section>
